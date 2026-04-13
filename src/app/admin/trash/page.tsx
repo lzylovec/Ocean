@@ -1,7 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useState, useMemo } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { CheckCircle2, FileEdit, Archive, Loader2, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type TrashIdentityItem = {
   identityId: string;
@@ -36,239 +43,226 @@ type TrashIdentityResponse = {
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://127.0.0.1:8000";
 
 export default function TrashAdminPage() {
-  const [data, setData] = useState<TrashIdentityResponse | null>(null);
+  const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [message, setMessage] = useState("正在加载数据库中的垃圾身份证...");
-  const [updating, setUpdating] = useState(false);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/trash-identities`, {
-          cache: "no-store",
-        });
-        if (!response.ok) {
-          throw new Error("垃圾身份证列表加载失败。");
-        }
+  const { data, isLoading, error } = useQuery<TrashIdentityResponse>({
+    queryKey: ["trash-identities"],
+    queryFn: async () => {
+      const response = await fetch(`${API_BASE_URL}/api/v1/trash-identities`, { cache: "no-store" });
+      if (!response.ok) throw new Error("垃圾身份证列表加载失败。");
+      return response.json();
+    },
+  });
 
-        const payload = (await response.json()) as TrashIdentityResponse;
-        setData(payload);
-        setSelectedId(payload.items[0]?.identityId ?? null);
-        setMessage(payload.items.length ? "已加载真实数据库记录。" : "数据库中还没有记录，请先到采集页执行一次流水线。")
-      } catch (error) {
-        setMessage(error instanceof Error ? error.message : "发生未知错误。");
-      }
-    }
+  const selected = useMemo(() => {
+    if (!data?.items) return null;
+    if (selectedId) return data.items.find((item) => item.identityId === selectedId) || null;
+    return data.items[0] || null;
+  }, [data, selectedId]);
 
-    void load();
-  }, []);
-
-  async function reload() {
-    const response = await fetch(`${API_BASE_URL}/api/v1/trash-identities`, {
-      cache: "no-store",
-    });
-    if (!response.ok) {
-      throw new Error("垃圾身份证列表加载失败。");
-    }
-
-    const payload = (await response.json()) as TrashIdentityResponse;
-    setData(payload);
-    setSelectedId((current) => current ?? payload.items[0]?.identityId ?? null);
-  }
-
-  async function updateStatus(nextStatus: "待复核" | "已确认" | "待补OCR") {
-    if (!selected) {
-      return;
-    }
-
-    setUpdating(true);
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/trash-identities/${selected.identityId}`, {
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      const response = await fetch(`${API_BASE_URL}/api/v1/trash-identities/${id}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ reviewStatus: nextStatus }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviewStatus: status }),
       });
-      if (!response.ok) {
-        throw new Error("更新审核状态失败。");
-      }
-
-      await reload();
-      setMessage(`记录 ${selected.identityId} 已更新为 ${nextStatus}。`);
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : "发生未知错误。");
-    } finally {
-      setUpdating(false);
-    }
-  }
-
-  const selected = useMemo(
-    () => data?.items.find((item) => item.identityId === selectedId) ?? data?.items[0] ?? null,
-    [data, selectedId],
-  );
+      if (!response.ok) throw new Error("更新审核状态失败。");
+      return response.json();
+    },
+    onSuccess: (_, variables) => {
+      toast.success(`记录 ${variables.id.slice(0, 8)}... 已更新为 ${variables.status}。`);
+      queryClient.invalidateQueries({ queryKey: ["trash-identities"] });
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
 
   return (
-    <main className="page">
-      <div className="shell page-stack">
-        <header className="page-header page-header-tight">
-          <p className="eyebrow">Review Workspace</p>
-          <h1>垃圾身份证后台核对</h1>
-          <p>这一页围绕“记录列表 + 单条详情”组织，适合实际业务复核，而不是只看一张表。</p>
-        </header>
+    <div className="flex flex-col gap-6 max-w-[1400px] mx-auto h-[calc(100vh-8rem)]">
+      <div className="flex flex-col gap-2 shrink-0">
+        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Review Workspace</p>
+        <h1 className="text-3xl font-extrabold tracking-tight">垃圾身份证后台核对</h1>
+        <p className="text-muted-foreground">这一页围绕“记录列表 + 单条详情”组织，适合实际业务复核。</p>
+      </div>
 
-        <section className="metric-strip compact-strip">
-          <article className="metric-tile compact-tile">
-            <span>待复核</span>
-            <strong>{data?.counts.pendingReview ?? 0}</strong>
-            <p>需要人工确认的记录</p>
-          </article>
-          <article className="metric-tile compact-tile">
-            <span>待补 OCR</span>
-            <strong>{data?.counts.needsOcr ?? 0}</strong>
-            <p>文字线索不足的记录</p>
-          </article>
-          <article className="metric-tile compact-tile">
-            <span>已确认</span>
-            <strong>{data?.counts.confirmed ?? 0}</strong>
-            <p>已完成业务闭环确认</p>
-          </article>
-        </section>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 shrink-0">
+        <Card className="bg-slate-50 border-slate-200">
+          <CardContent className="p-4 flex flex-col gap-1">
+            <span className="text-sm font-medium text-muted-foreground">待复核</span>
+            <strong className="text-2xl font-bold text-foreground">{data?.counts?.pendingReview ?? 0}</strong>
+            <p className="text-xs text-muted-foreground mt-1">需要人工确认的记录</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-slate-50 border-slate-200">
+          <CardContent className="p-4 flex flex-col gap-1">
+            <span className="text-sm font-medium text-muted-foreground">待补 OCR</span>
+            <strong className="text-2xl font-bold text-foreground">{data?.counts?.needsOcr ?? 0}</strong>
+            <p className="text-xs text-muted-foreground mt-1">文字线索不足的记录</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-slate-50 border-slate-200">
+          <CardContent className="p-4 flex flex-col gap-1">
+            <span className="text-sm font-medium text-muted-foreground">已确认</span>
+            <strong className="text-2xl font-bold text-foreground">{data?.counts?.confirmed ?? 0}</strong>
+            <p className="text-xs text-muted-foreground mt-1">已完成业务闭环确认</p>
+          </CardContent>
+        </Card>
+      </div>
 
-        <p className="caption">{message}</p>
-
-        <section className="review-layout">
-          <article className="card list-card">
-            <div className="card-head">
-              <div>
-                <p className="eyebrow">Identity Queue</p>
-                <h2>记录队列</h2>
+      <div className="flex-1 flex gap-6 min-h-0">
+        {/* Left Column: Queue */}
+        <Card className="w-[320px] flex flex-col shrink-0">
+          <CardHeader className="px-4 py-4 border-b shrink-0">
+            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Identity Queue</p>
+            <CardTitle className="text-lg">记录队列</CardTitle>
+          </CardHeader>
+          <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-2">
+            {isLoading && <div className="p-4 text-center text-sm text-muted-foreground">正在加载记录...</div>}
+            {error && <div className="p-4 text-center text-sm text-destructive">加载失败</div>}
+            {data?.items?.length === 0 && !isLoading && (
+              <div className="p-4 text-center text-sm text-muted-foreground border border-dashed rounded-lg">
+                还没有可复核的记录。
               </div>
-            </div>
-            <div className="record-list">
-              {data?.items.length ? (
-                data.items.map((item) => (
-                  <button
-                    key={item.identityId}
-                    className={`record-item ${selected?.identityId === item.identityId ? "active" : ""}`}
-                    onClick={() => setSelectedId(item.identityId)}
-                    type="button"
-                  >
-                    <div className="record-item-head">
-                      <strong>{item.primaryCategory}</strong>
-                      <span className={`inline-badge ${item.volunteerRiskLevel === "high" ? "danger" : "info"}`}>
-                        {item.volunteerRiskLevel}
-                      </span>
-                    </div>
-                    <p>{item.siteName}</p>
-                    <span>{item.identityId}</span>
-                  </button>
-                ))
-              ) : (
-                <div className="empty-state">还没有可复核的记录。</div>
-              )}
-            </div>
-          </article>
+            )}
+            {data?.items?.map((item) => {
+              const isActive = (selected?.identityId === item.identityId);
+              return (
+                <button
+                  key={item.identityId}
+                  onClick={() => setSelectedId(item.identityId)}
+                  className={cn(
+                    "flex flex-col gap-2 p-3 rounded-lg border text-left transition-all",
+                    isActive
+                      ? "border-primary bg-primary/5 shadow-sm"
+                      : "bg-white hover:border-primary/30 hover:bg-slate-50"
+                  )}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <strong className="font-semibold text-sm truncate">{item.primaryCategory}</strong>
+                    <Badge variant={item.volunteerRiskLevel === "high" ? "destructive" : "secondary"} className="capitalize text-[10px] px-1.5 py-0">
+                      {item.volunteerRiskLevel}
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground truncate w-full">{item.siteName}</p>
+                  <div className="flex items-center justify-between w-full mt-1">
+                    <span className="text-[10px] font-mono text-muted-foreground bg-slate-100 px-1.5 rounded">{item.identityId.slice(0, 8)}</span>
+                    <span className={cn("text-[10px] font-medium", item.reviewStatus === '已确认' ? 'text-emerald-600' : 'text-amber-600')}>
+                      {item.reviewStatus}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </Card>
 
-          <article className="card detail-card">
-            <div className="card-head">
-              <div>
-                <p className="eyebrow">Identity Detail</p>
-                <h2>{selected?.identityId ?? "暂无记录"}</h2>
-              </div>
-              {selected ? <span className="inline-badge success">{selected.reviewStatus}</span> : null}
+        {/* Right Column: Detail */}
+        <Card className="flex-1 flex flex-col min-w-0">
+          <CardHeader className="px-6 py-4 border-b flex flex-row items-center justify-between shrink-0">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Identity Detail</p>
+              <CardTitle className="text-lg font-mono">{selected?.identityId ?? "暂无记录"}</CardTitle>
             </div>
+            {selected && (
+              <Badge variant="outline" className={cn(
+                "px-3 py-1",
+                selected.reviewStatus === '已确认' ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-amber-200 bg-amber-50 text-amber-700'
+              )}>
+                {selected.reviewStatus}
+              </Badge>
+            )}
+          </CardHeader>
 
+          <div className="flex-1 overflow-y-auto p-6">
             {selected ? (
-              <div className="detail-stack">
-                <div className="key-grid">
-                  <div className="key-metric small-metric">
-                    <span>主类别</span>
-                    <strong>{selected.primaryCategory}</strong>
+              <div className="flex flex-col gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex flex-col gap-1 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <span className="text-xs text-muted-foreground">主类别</span>
+                    <strong className="text-base font-semibold text-foreground">{selected.primaryCategory}</strong>
                   </div>
-                  <div className="key-metric small-metric">
-                    <span>材质线索</span>
-                    <strong>{selected.materialHint}</strong>
+                  <div className="flex flex-col gap-1 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <span className="text-xs text-muted-foreground">材质线索</span>
+                    <strong className="text-base font-semibold text-foreground">{selected.materialHint}</strong>
                   </div>
-                  <div className="key-metric small-metric">
-                    <span>来源提示</span>
-                    <strong>{selected.sourceHint}</strong>
+                  <div className="flex flex-col gap-1 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <span className="text-xs text-muted-foreground">来源提示</span>
+                    <strong className="text-base font-semibold text-foreground">{selected.sourceHint}</strong>
                   </div>
-                  <div className="key-metric small-metric">
-                    <span>最高置信度</span>
-                    <strong>{selected.topConfidence.toFixed(2)}</strong>
-                  </div>
-                </div>
-
-                <div className="preview-grid">
-                  <div className="preview-frame">
-                    <span>原图</span>
-                    <Image alt="原图" className="preview-image" height={900} src={selected.originalUrl} unoptimized width={1200} />
-                  </div>
-                  <div className="preview-frame">
-                    <span>增强图</span>
-                    <Image alt="增强图" className="preview-image" height={900} src={selected.enhancedUrl} unoptimized width={1200} />
+                  <div className="flex flex-col gap-1 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <span className="text-xs text-muted-foreground">最高置信度</span>
+                    <strong className="text-base font-semibold text-foreground">{selected.topConfidence.toFixed(2)}</strong>
                   </div>
                 </div>
 
-                <div className="detail-split">
-                  <div className="sub-card">
-                    <strong>语义摘要</strong>
-                    <p>{selected.volunteerSummary}</p>
-                    <div className="tag-row top-gap">
-                      {selected.volunteerTags.map((item) => (
-                        <span key={item} className="tag">
-                          {item}
-                        </span>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
+                    <strong className="text-sm font-semibold">原始图片</strong>
+                    <div className="relative aspect-video w-full rounded-xl overflow-hidden border bg-black/5">
+                      <Image src={`${API_BASE_URL}${selected.originalUrl}`} alt="Original" fill className="object-contain" unoptimized />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <strong className="text-sm font-semibold">增强与检测结果</strong>
+                    <div className="relative aspect-video w-full rounded-xl overflow-hidden border bg-black/5">
+                      <Image src={`${API_BASE_URL}${selected.enhancedUrl}`} alt="Enhanced" fill className="object-contain" unoptimized />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="p-5 bg-white rounded-xl border border-slate-200">
+                    <strong className="text-sm font-semibold block mb-3 text-primary">语义分析摘要</strong>
+                    <p className="text-sm leading-relaxed">{selected.volunteerSummary}</p>
+
+                    <strong className="text-sm font-semibold block mt-4 mb-2 text-primary">OCR 提取文本</strong>
+                    <p className="text-sm text-muted-foreground">
+                      {selected.ocrTexts.length ? selected.ocrTexts.join(" | ") : "未检测到明显文字"}
+                    </p>
+                  </div>
+                  <div className="p-5 bg-white rounded-xl border border-slate-200">
+                    <strong className="text-sm font-semibold block mb-3 text-primary">处理建议</strong>
+                    <ul className="list-disc pl-4 text-sm text-muted-foreground space-y-2">
+                      {selected.actionSuggestions.map((s, i) => (
+                        <li key={i}>{s}</li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
-
-                  <div className="sub-card">
-                    <strong>OCR 线索</strong>
-                    <div className="tag-row top-gap">
-                      {selected.ocrTexts.length ? selected.ocrTexts.map((item) => <span key={item} className="tag">{item}</span>) : <span className="tag muted-tag">无文本</span>}
-                    </div>
-                    <div className="tag-row top-gap">
-                      {selected.ocrKeywords.map((item) => (
-                        <span key={item} className="tag subtle-tag">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="sub-card">
-                  <strong>审核动作</strong>
-                  <div className="action-row top-gap">
-                    <button className="button" disabled={updating} onClick={() => updateStatus("已确认")} type="button">
-                      标记已确认
-                    </button>
-                    <button className="button-secondary" disabled={updating} onClick={() => updateStatus("待复核")} type="button">
-                      退回待复核
-                    </button>
-                    <button className="button-secondary" disabled={updating} onClick={() => updateStatus("待补OCR")} type="button">
-                      标记待补 OCR
-                    </button>
-                  </div>
-                </div>
-
-                <div className="sub-card">
-                  <strong>行动建议</strong>
-                  <ul className="bullet-list compact">
-                    {selected.actionSuggestions.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
                 </div>
               </div>
             ) : (
-              <div className="empty-state">先到采集页生成一条记录，这里会展示真实详情。</div>
+              <div className="h-full flex items-center justify-center text-muted-foreground border border-dashed rounded-xl">
+                请在左侧选择一条记录进行复核
+              </div>
             )}
-          </article>
-        </section>
+          </div>
+
+          {selected && (
+            <CardFooter className="px-6 py-4 border-t bg-slate-50 shrink-0 flex items-center justify-end gap-3">
+              <span className="text-sm text-muted-foreground mr-auto">更新记录状态：</span>
+              <Button
+                variant="outline"
+                disabled={updateStatusMutation.isPending}
+                onClick={() => updateStatusMutation.mutate({ id: selected.identityId, status: "待补OCR" })}
+              >
+                <FileEdit className="w-4 h-4 mr-2" /> 待补 OCR
+              </Button>
+              <Button
+                variant="default"
+                className="bg-emerald-600 hover:bg-emerald-700"
+                disabled={updateStatusMutation.isPending}
+                onClick={() => updateStatusMutation.mutate({ id: selected.identityId, status: "已确认" })}
+              >
+                {updateStatusMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <CheckCircle2 className="w-4 h-4 mr-2" />}
+                已确认
+              </Button>
+            </CardFooter>
+          )}
+        </Card>
       </div>
-    </main>
+    </div>
   );
 }
