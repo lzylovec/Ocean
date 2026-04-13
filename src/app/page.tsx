@@ -1,7 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ChevronRight, ArrowRight } from "lucide-react";
 
 type OverviewResponse = {
   metrics: Array<{ label: string; value: string; note: string }>;
@@ -46,37 +50,28 @@ const stackItems = [
 ];
 
 export default function Home() {
-  const [overview, setOverview] = useState<OverviewResponse | null>(null);
-  const [identities, setIdentities] = useState<IdentityResponse | null>(null);
-  const [message, setMessage] = useState("正在加载项目工作台...");
+  const { data: overview, isLoading: isLoadingOverview, error: overviewError } = useQuery<OverviewResponse>({
+    queryKey: ["overview"],
+    queryFn: async () => {
+      const res = await fetch(`${API_BASE_URL}/api/v1/dashboard/overview`);
+      if (!res.ok) throw new Error("加载概览数据失败");
+      return res.json();
+    },
+  });
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const [overviewResp, identityResp] = await Promise.all([
-          fetch(`${API_BASE_URL}/api/v1/dashboard/overview`, { cache: "no-store" }),
-          fetch(`${API_BASE_URL}/api/v1/trash-identities?limit=6`, { cache: "no-store" }),
-        ]);
-
-        if (!overviewResp.ok || !identityResp.ok) {
-          throw new Error("项目数据加载失败。");
-        }
-
-        setOverview((await overviewResp.json()) as OverviewResponse);
-        setIdentities((await identityResp.json()) as IdentityResponse);
-        setMessage("工作台已同步后端状态。可直接从这里进入采集、核对和看板模块。");
-      } catch (error) {
-        setMessage(error instanceof Error ? error.message : "发生未知错误。");
-      }
-    }
-
-    void load();
-  }, []);
+  const { data: identities, isLoading: isLoadingIdentities, error: identitiesError } = useQuery<IdentityResponse>({
+    queryKey: ["identities"],
+    queryFn: async () => {
+      const res = await fetch(`${API_BASE_URL}/api/v1/trash-identities?limit=6`);
+      if (!res.ok) throw new Error("加载入库记录失败");
+      return res.json();
+    },
+  });
 
   const liveMetrics = useMemo(() => {
-    const pending = identities?.counts.pendingReview ?? 0;
-    const needsOcr = identities?.counts.needsOcr ?? 0;
-    const confirmed = identities?.counts.confirmed ?? 0;
+    const pending = identities?.counts?.pendingReview ?? 0;
+    const needsOcr = identities?.counts?.needsOcr ?? 0;
+    const confirmed = identities?.counts?.confirmed ?? 0;
 
     return [
       { label: "待复核", value: String(pending), note: "等待人工确认的垃圾身份证" },
@@ -85,125 +80,113 @@ export default function Home() {
     ];
   }, [identities]);
 
+  const hasError = overviewError || identitiesError;
+  const isLoading = isLoadingOverview || isLoadingIdentities;
+
   return (
-    <main className="page">
-      <div className="shell page-stack">
-        <section className="workspace-hero card">
-          <div className="card-head">
+    <div className="flex flex-col gap-6 max-w-7xl mx-auto">
+      <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-none shadow-none">
+        <CardHeader>
+          <div className="flex items-center justify-between">
             <div>
-              <p className="eyebrow">Command Center</p>
-              <h1>Ocean 项目工作台</h1>
+              <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Command Center</p>
+              <CardTitle className="text-3xl font-extrabold">Ocean 项目工作台</CardTitle>
             </div>
-            <span className="inline-badge success">AI 流水线可用</span>
+            <Badge variant="default" className="bg-emerald-500 text-white hover:bg-emerald-600">AI 流水线可用</Badge>
           </div>
-          <p className="lead">
-            当前系统已经具备图片上传、增强、检测、OCR、语义分析、垃圾身份证入库与后台核对能力。这个首页默认展示项目运行状态和待办工作，而不是路演介绍页。
-          </p>
-          <p className="caption">{message}</p>
-          <div className="metric-strip compact-strip">
+          <CardDescription className="text-base mt-2 max-w-3xl">
+            当前系统已经具备图片上传、增强、检测、OCR、语义分析、垃圾身份证入库与后台核对能力。这个首页默认展示项目运行状态和待办工作。
+          </CardDescription>
+          {isLoading && <p className="text-sm text-muted-foreground mt-2">正在加载项目工作台数据...</p>}
+          {hasError && <p className="text-sm text-destructive mt-2">数据加载失败，请检查后端服务是否正常启动。</p>}
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
             {[...(overview?.metrics ?? []), ...liveMetrics].slice(0, 4).map((item) => (
-              <article key={`${item.label}-${item.value}`} className="metric-tile compact-tile">
-                <span>{item.label}</span>
-                <strong>{item.value}</strong>
-                <p>{item.note}</p>
-              </article>
+              <div key={`${item.label}-${item.value}`} className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-1">
+                <span className="text-sm font-medium text-muted-foreground">{item.label}</span>
+                <strong className="text-2xl font-bold text-foreground">{item.value}</strong>
+                <p className="text-xs text-muted-foreground mt-1">{item.note}</p>
+              </div>
             ))}
           </div>
-        </section>
+        </CardContent>
+      </Card>
 
-        <section className="two-up section-block">
-          <article className="card">
-            <div className="card-head">
-              <div>
-                <p className="eyebrow">Quick Actions</p>
-                <h2>直接进入业务操作</h2>
-              </div>
-            </div>
-            <div className="entry-grid single-column-grid">
-              {quickLinks.map((item) => (
-                <Link key={item.href} className="entry-card compact-entry card-link-lite" href={item.href}>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <span>打开模块</span>
-                </Link>
-              ))}
-            </div>
-          </article>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Quick Actions</p>
+            <CardTitle className="text-xl">直接进入业务操作</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3">
+            {quickLinks.map((item) => (
+              <Link key={item.href} href={item.href} className="group flex items-center justify-between p-4 rounded-xl border hover:border-primary hover:shadow-sm transition-all bg-slate-50/50 hover:bg-white">
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </Link>
+            ))}
+          </CardContent>
+        </Card>
 
-          <article className="card">
-            <div className="card-head">
-              <div>
-                <p className="eyebrow">Model Stack</p>
-                <h2>当前运行栈</h2>
-              </div>
-            </div>
-            <ul className="bullet-list compact">
+        <Card>
+          <CardHeader>
+            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Model Stack</p>
+            <CardTitle className="text-xl">当前运行栈</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-3">
               {stackItems.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item} className="flex items-center gap-3 text-sm">
+                  <div className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
+                  <span className="text-foreground font-medium">{item}</span>
+                </li>
               ))}
             </ul>
-          </article>
-        </section>
+          </CardContent>
+        </Card>
 
-        <section className="two-up section-block">
-          <article className="card">
-            <div className="card-head">
-              <div>
-                <p className="eyebrow">Review Queue</p>
-                <h2>待处理记录</h2>
-              </div>
+        <Card className="lg:col-span-2">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Review Queue</p>
+              <CardTitle className="text-xl">待处理记录</CardTitle>
             </div>
-            <div className="stack-cards compact-stack">
-              {identities?.items.length ? (
+            <Link href="/admin/trash" className="text-sm text-primary flex items-center gap-1 hover:underline">
+              查看全部 <ArrowRight className="w-4 h-4" />
+            </Link>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {identities?.items?.length ? (
                 identities.items.map((item) => (
-                  <div key={item.identityId} className="sub-card list-item-card">
-                    <div className="list-item-head">
-                      <strong>{item.primaryCategory}</strong>
-                      <span className={`inline-badge ${item.volunteerRiskLevel === "high" ? "danger" : "info"}`}>
+                  <div key={item.identityId} className="flex flex-col gap-2 p-4 rounded-xl border bg-slate-50/50">
+                    <div className="flex items-start justify-between gap-2">
+                      <strong className="font-semibold">{item.primaryCategory}</strong>
+                      <Badge variant={item.volunteerRiskLevel === "high" ? "destructive" : "secondary"} className="capitalize">
                         {item.volunteerRiskLevel}
-                      </span>
+                      </Badge>
                     </div>
-                    <p>{item.siteName}</p>
-                    <span>{item.identityId} · {item.reviewStatus}</span>
-                    <span>{item.volunteerSummary}</span>
+                    <p className="text-sm font-medium text-muted-foreground">{item.siteName}</p>
+                    <div className="text-xs text-muted-foreground mt-2 flex flex-col gap-1">
+                      <span>ID: {item.identityId.slice(0, 8)}...</span>
+                      <span>状态: {item.reviewStatus}</span>
+                      <span className="line-clamp-2 mt-1 italic">"{item.volunteerSummary}"</span>
+                    </div>
                   </div>
                 ))
               ) : (
-                <div className="empty-state">当前还没有入库记录，请先从采集页生成第一条垃圾身份证。</div>
+                <div className="col-span-full py-8 text-center text-muted-foreground text-sm border border-dashed rounded-xl">
+                  {isLoadingIdentities ? "正在加载记录..." : "当前还没有入库记录，请先从采集页生成第一条垃圾身份证。"}
+                </div>
               )}
             </div>
-          </article>
-
-          <article className="card">
-            <div className="card-head">
-              <div>
-                <p className="eyebrow">Priority Sites</p>
-                <h2>重点潜点</h2>
-              </div>
-            </div>
-            <div className="table-wrap">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>潜点</th>
-                    <th>主垃圾类型</th>
-                    <th>风险</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(overview?.topSites ?? []).map((site) => (
-                    <tr key={site.name}>
-                      <td>{site.name}</td>
-                      <td>{site.topCategory}</td>
-                      <td>{site.risk}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </article>
-        </section>
+          </CardContent>
+        </Card>
       </div>
-    </main>
+    </div>
   );
 }
