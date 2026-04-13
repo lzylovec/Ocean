@@ -31,6 +31,7 @@ type PipelineResponse = {
   semanticMode: string;
   categories: string[];
   sourceHint: string;
+  materialHint: string;
   ocrKeywords: string[];
   detections: Array<{
     label: string;
