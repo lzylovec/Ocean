@@ -1,0 +1,112 @@
+<h2>D 海雾玻璃：动效签名（微动沉浸）</h2>
+<p class="subtitle">你选了配色 A 冰蓝青。下一步确定“全站动效签名”，决定惊艳感来自哪里。</p>
+
+<style>
+  .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .mini{
+    height:190px;border-radius:14px;overflow:hidden;position:relative;
+    border:1px solid rgba(255,255,255,.12);
+    background:radial-gradient(900px 480px at 30% 25%,rgba(148,163,184,.14),rgba(0,0,0,0)),
+               radial-gradient(900px 480px at 70% 30%,rgba(34,211,238,.12),rgba(0,0,0,0)),
+               linear-gradient(135deg,#0b1220,#070b12);
+  }
+  .glass{
+    position:absolute;left:16px;right:16px;bottom:16px;height:70px;border-radius:16px;
+    background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.07));
+    border:1px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(12px);
+    box-shadow:0 18px 60px rgba(0,0,0,.45);
+  }
+  .title{position:absolute;left:22px;bottom:44px;font-size:12px;color:rgba(255,255,255,.78)}
+  .dot{position:absolute;right:26px;bottom:38px;width:10px;height:10px;border-radius:999px;background:#22d3ee}
+
+  .fog{position:absolute;inset:-35% -25% -45% -25%;border-radius:42%;filter:saturate(1.1)}
+  .fog:before,.fog:after{content:"";position:absolute;inset:0;border-radius:42%;mix-blend-mode:screen}
+
+  .scan{position:absolute;left:-50%;top:38%;width:200%;height:2px;transform:rotate(-10deg);opacity:.55}
+
+  .bubbles{position:absolute;inset:0;opacity:.7;pointer-events:none}
+  .bubbles:before{content:"";position:absolute;inset:0;background:
+    radial-gradient(3px 3px at 16% 72%,rgba(255,255,255,.35),rgba(255,255,255,0) 60%),
+    radial-gradient(2px 2px at 32% 58%,rgba(255,255,255,.28),rgba(255,255,255,0) 60%),
+    radial-gradient(3px 3px at 68% 66%,rgba(255,255,255,.32),rgba(255,255,255,0) 60%),
+    radial-gradient(2px 2px at 82% 54%,rgba(255,255,255,.25),rgba(255,255,255,0) 60%),
+    radial-gradient(2px 2px at 54% 78%,rgba(255,255,255,.22),rgba(255,255,255,0) 60%);
+    animation:bubble 8s ease-in-out infinite;
+  }
+
+  .tide{
+    position:absolute;inset:-20% -20% -20% -20%;
+    background:conic-gradient(from 90deg at 50% 50%, rgba(34,211,238,.12), rgba(255,255,255,0), rgba(34,211,238,.10));
+    filter:blur(16px);
+    opacity:.55;
+    animation:tide 10s ease-in-out infinite;
+  }
+
+  .m1 .fog:before{background:radial-gradient(circle at 42% 35%,rgba(255,255,255,.14),rgba(255,255,255,0) 62%);animation:driftA 10s ease-in-out infinite}
+  .m1 .fog:after{background:radial-gradient(circle at 60% 45%,rgba(34,211,238,.20),rgba(34,211,238,0) 62%);animation:driftB 13s ease-in-out infinite}
+  .m1 .scan{background:linear-gradient(90deg,rgba(0,0,0,0),rgba(34,211,238,.28),rgba(0,0,0,0));animation:scan 7.8s ease-in-out infinite}
+
+  .m2 .fog:before{background:radial-gradient(circle at 45% 36%,rgba(255,255,255,.16),rgba(255,255,255,0) 60%);animation:pulse 6.6s ease-in-out infinite}
+  .m2 .fog:after{background:radial-gradient(circle at 62% 46%,rgba(34,211,238,.18),rgba(34,211,238,0) 64%);animation:driftB 12.6s ease-in-out infinite}
+  .m2 .scan{background:linear-gradient(90deg,rgba(0,0,0,0),rgba(255,255,255,.18),rgba(0,0,0,0));animation:scan 9.2s ease-in-out infinite}
+
+  .m3 .fog:before{background:radial-gradient(circle at 44% 36%,rgba(255,255,255,.14),rgba(255,255,255,0) 62%);animation:driftA 11s ease-in-out infinite}
+  .m3 .fog:after{background:radial-gradient(circle at 62% 44%,rgba(34,211,238,.18),rgba(34,211,238,0) 62%);animation:driftB 14s ease-in-out infinite}
+
+  @keyframes driftA{0%{transform:translate(-7%,-2%) rotate(0deg)}50%{transform:translate(7%,2%) rotate(18deg)}100%{transform:translate(-7%,-2%) rotate(0deg)}}
+  @keyframes driftB{0%{transform:translate(6%,-3%) rotate(0deg)}50%{transform:translate(-6%,3%) rotate(-14deg)}100%{transform:translate(6%,-3%) rotate(0deg)}}
+  @keyframes scan{0%{transform:translateX(-12%) rotate(-10deg);opacity:.10}45%{opacity:.62}100%{transform:translateX(12%) rotate(-10deg);opacity:.08}}
+  @keyframes pulse{0%{transform:scale(.98);opacity:.18}50%{transform:scale(1.03);opacity:.42}100%{transform:scale(.98);opacity:.18}}
+  @keyframes bubble{0%{transform:translateY(0);opacity:.25}50%{transform:translateY(-10px);opacity:.72}100%{transform:translateY(0);opacity:.25}}
+  @keyframes tide{0%{transform:translate(-6%,2%) rotate(0deg)}50%{transform:translate(6%,-2%) rotate(35deg)}100%{transform:translate(-6%,2%) rotate(0deg)}}
+</style>
+
+<div class="cards">
+  <div class="card" data-choice="fog-scan" onclick="toggleSelect(this)">
+    <div class="card-image mini m1">
+      <div class="fog"></div>
+      <div class="scan"></div>
+      <div class="glass"></div>
+      <div class="title">雾漂移 + 扫光</div>
+      <div class="dot"></div>
+    </div>
+    <div class="card-body">
+      <h3>A 雾漂移 + 扫光（推荐）</h3>
+      <p>动效集中在背景与高光扫过；阅读干净，质感稳定，适合全站。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="refract-bubbles" onclick="toggleSelect(this)">
+    <div class="card-image mini m2">
+      <div class="fog"></div>
+      <div class="scan"></div>
+      <div class="bubbles"></div>
+      <div class="glass"></div>
+      <div class="title">折射脉冲 + 微泡</div>
+      <div class="dot"></div>
+    </div>
+    <div class="card-body">
+      <h3>B 折射脉冲 + 微泡</h3>
+      <p>更“灵动”，局部有轻微脉冲与浮动点；仍属于微动，但更显眼。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="tide-breath" onclick="toggleSelect(this)">
+    <div class="card-image mini m3">
+      <div class="tide"></div>
+      <div class="fog"></div>
+      <div class="glass"></div>
+      <div class="title">潮汐呼吸</div>
+      <div class="dot"></div>
+    </div>
+    <div class="card-body">
+      <h3>C 潮汐呼吸</h3>
+      <p>整页像在“呼吸”，更沉浸；需要更谨慎的强度控制避免眩晕。</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="subtitle">请点选 A/B/C 其一，然后在终端回复我你的选择。</p>
+</div>

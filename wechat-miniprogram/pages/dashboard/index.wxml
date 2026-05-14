@@ -1,0 +1,121 @@
+<view class="page-shell">
+  <view class="hero-card">
+    <view class="hero-kicker">Ocean Dashboard</view>
+    <view class="hero-title">治理看板</view>
+    <view class="hero-subtitle">
+      这里展示真实垃圾身份证聚合数据，适合在移动端快速查看潜点风险和待处理记录结构。
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Live Metrics</view>
+        <view class="section-title">实时指标</view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{loading}}">
+      正在加载看板数据...
+    </view>
+
+    <view class="empty-state" wx:elif="{{errorMessage}}">
+      {{errorMessage}}
+    </view>
+
+    <view class="metric-row" wx:else>
+      <block wx:for="{{metrics}}" wx:key="label">
+        <view class="metric-item">
+          <view class="metric-card">
+            <view class="metric-label">{{item.label}}</view>
+            <view class="metric-value">{{item.value}}</view>
+            <view class="metric-note">{{item.note}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Queue Structure</view>
+        <view class="section-title">状态结构</view>
+      </view>
+    </view>
+
+    <view class="bar-row" wx:for="{{countBars}}" wx:key="label">
+      <view class="bar-head">
+        <view class="bar-label">{{item.label}}</view>
+        <view class="bar-value">{{item.value}}</view>
+      </view>
+      <view class="bar-track">
+        <view class="{{item.className}}" style="width: {{item.percent}}%;"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Top Sites</view>
+        <view class="section-title">重点潜点</view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{!topSites.length && !loading}}">
+      当前没有可展示的潜点聚合数据。
+    </view>
+
+    <view class="site-row" wx:for="{{topSites}}" wx:key="name">
+      <view>
+        <view class="site-name">{{item.name}}</view>
+        <view class="site-desc">{{item.topCategory}} · {{item.recordCount}} 条记录</view>
+      </view>
+      <view class="site-risk">风险 {{item.risk}}</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Recent Identities</view>
+        <view class="section-title">最近入库记录</view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{!recentIdentities.length && !loading}}">
+      当前没有入库记录。
+    </view>
+
+    <view class="list-item" wx:for="{{recentIdentities}}" wx:key="identityId">
+      <view class="item-head">
+        <view>
+          <view class="item-title">{{item.recognizedCategory}}</view>
+          <view class="item-subtitle">{{item.professionalCategory}} · {{item.siteName}}</view>
+        </view>
+        <view class="{{item.reviewMeta.className}}">{{item.reviewMeta.label}}</view>
+      </view>
+      <view class="meta-row">
+        <view class="meta-tag {{item.riskMeta.className}}">{{item.riskMeta.label}}</view>
+        <view class="meta-tag badge badge-neutral">ID {{item.shortIdentityId}}</view>
+      </view>
+      <view class="note-card">{{item.volunteerSummary}}</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Model Stack</view>
+        <view class="section-title">运行中的组件</view>
+      </view>
+    </view>
+
+    <view class="stack-list">
+      <view class="stack-item" wx:for="{{modelStatus}}" wx:key="*this">
+        {{item}}
+      </view>
+    </view>
+  </view>
+</view>

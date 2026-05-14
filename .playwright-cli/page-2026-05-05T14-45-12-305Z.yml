@@ -1,0 +1,124 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - link "Ocean" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: Ocean
+        - paragraph [ref=e10]: 水下垃圾识别系统
+      - generic [ref=e11]:
+        - generic [ref=e12]: Workspace
+        - navigation "Primary" [ref=e13]:
+          - link "项目首页" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - img [ref=e15]
+            - generic [ref=e20]: 项目首页
+          - link "采集页" [ref=e21] [cursor=pointer]:
+            - /url: /collect
+            - img [ref=e22]
+            - generic [ref=e25]: 采集页
+          - link "任务历史" [ref=e26] [cursor=pointer]:
+            - /url: /jobs
+            - img [ref=e27]
+            - generic [ref=e31]: 任务历史
+          - link "数据看板" [ref=e33] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e34]
+            - generic [ref=e36]: 数据看板
+          - link "后台核对" [ref=e37] [cursor=pointer]:
+            - /url: /admin/trash
+            - img [ref=e38]
+            - generic [ref=e42]: 后台核对
+      - generic [ref=e44]:
+        - generic [ref=e45]: Status
+        - generic [ref=e46]: AI 工作流在线
+        - list [ref=e48]:
+          - listitem [ref=e49]:
+            - generic [ref=e50]: ›
+            - generic [ref=e51]: 增强、检测、OCR、语义分析已联通
+          - listitem [ref=e52]:
+            - generic [ref=e53]: ›
+            - generic [ref=e54]: 垃圾身份证支持数据库持久化
+          - listitem [ref=e55]:
+            - generic [ref=e56]: ›
+            - generic [ref=e57]: 后台页支持记录核对与状态更新
+    - generic [ref=e58]:
+      - banner [ref=e59]:
+        - heading "治理工作台 面向采集、分析、核对与治理闭环" [level=1] [ref=e61]:
+          - text: 治理工作台
+          - generic [ref=e63]: 面向采集、分析、核对与治理闭环
+        - generic [ref=e64]:
+          - button "切换主题" [ref=e65] [cursor=pointer]:
+            - img
+          - generic [ref=e66]:
+            - generic [ref=e67]: 本地开发环境
+            - generic [ref=e68]: 数据库已接通
+      - main [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - generic [ref=e73]:
+              - paragraph [ref=e74]:
+                - img [ref=e75]
+                - text: Job History
+              - heading "任务历史" [level=1] [ref=e79]
+              - paragraph [ref=e80]: 查看流水线任务队列、执行进度、完成结果和失败原因。
+            - button "刷新列表" [ref=e81] [cursor=pointer]:
+              - img
+              - text: 刷新列表
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - generic [ref=e84]:
+                - generic [ref=e85]: 排队中
+                - img [ref=e87]
+              - strong [ref=e90]: "0"
+              - paragraph [ref=e91]: 等待后台处理
+            - generic [ref=e92]:
+              - generic [ref=e93]:
+                - generic [ref=e94]: 执行中
+                - img [ref=e96]
+              - strong [ref=e98]: "0"
+              - paragraph [ref=e99]: 正在执行中的任务
+            - generic [ref=e100]:
+              - generic [ref=e101]:
+                - generic [ref=e102]: 已完成
+                - img [ref=e104]
+              - strong [ref=e107]: "0"
+              - paragraph [ref=e108]: 已完成并可追溯结果
+            - generic [ref=e109]:
+              - generic [ref=e110]:
+                - generic [ref=e111]: 失败
+                - img [ref=e113]
+              - strong [ref=e117]: "0"
+              - paragraph [ref=e118]: 需要查看失败原因
+            - generic [ref=e119]:
+              - generic [ref=e120]:
+                - generic [ref=e121]: 已取消
+                - img [ref=e123]
+              - strong [ref=e127]: "0"
+              - paragraph [ref=e128]: 已人工取消的任务
+          - generic [ref=e129]:
+            - textbox "搜索任务 ID、潜点、身份证 ID、备注..." [ref=e130]
+            - combobox [ref=e131]:
+              - option "全部状态" [selected]
+              - option "排队中"
+              - option "执行中"
+              - option "已完成"
+              - option "失败"
+              - option "已取消"
+            - button "重置筛选" [ref=e132] [cursor=pointer]
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - generic [ref=e136]: 任务列表
+              - generic [ref=e138]:
+                - img [ref=e139]
+                - text: 正在加载任务历史...
+            - generic [ref=e141]:
+              - generic [ref=e143]: 任务详情
+              - generic [ref=e145]:
+                - img [ref=e146]
+                - generic [ref=e149]: 请选择一条任务记录
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e155] [cursor=pointer]:
+    - img [ref=e156]
+  - alert [ref=e159]

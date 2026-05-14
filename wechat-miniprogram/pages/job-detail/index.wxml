@@ -1,0 +1,117 @@
+<view class="page-shell">
+  <view class="hero-card">
+    <view class="hero-kicker">Job Detail</view>
+    <view class="hero-title">任务 {{job ? job.shortJobId : '--'}}</view>
+    <view class="hero-subtitle">
+      查看单个异步任务的阶段、进度、结果、失败原因和复用情况。
+    </view>
+    <view class="hero-status {{job ? job.statusMeta.className : 'status-pill status-neutral'}}">
+      <text>{{job ? job.statusMeta.label : '加载中'}}</text>
+    </view>
+  </view>
+
+  <view class="panel panel-compact" wx:if="{{errorMessage}}">
+    <view class="section-kicker">Request Error</view>
+    <view class="section-desc">{{errorMessage}}</view>
+  </view>
+
+  <view class="panel" wx:if="{{job}}">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Execution</view>
+        <view class="section-title">执行状态</view>
+      </view>
+      <view class="{{job.statusMeta.className}}">{{job.statusMeta.label}}</view>
+    </view>
+
+    <view class="job-meta-line">任务 ID：{{job.jobId}}</view>
+    <view class="job-meta-line">当前阶段：{{job.stageLabel}}</view>
+    <view class="job-meta-line">状态信息：{{job.message}}</view>
+    <view class="job-meta-line">重试次数：{{job.retryCount}}</view>
+    <view class="job-meta-line">缓存命中：{{job.cacheHitCount}} 次</view>
+    <view class="job-meta-line">进行中复用：{{job.inflightReuseCount}} 次</view>
+    <view class="job-meta-line">创建时间：{{job.createdAtText}}</view>
+    <view class="job-meta-line">更新时间：{{job.updatedAtText}}</view>
+    <view class="job-meta-line" wx:if="{{job.startedAtText !== '未完成'}}">开始时间：{{job.startedAtText}}</view>
+    <view class="job-meta-line" wx:if="{{job.finishedAtText !== '未完成'}}">结束时间：{{job.finishedAtText}}</view>
+    <view class="job-meta-line" wx:if="{{job.errorDetail}}">失败原因：{{job.errorDetail}}</view>
+
+    <view class="progress-block">
+      <view class="progress-head">
+        <view class="progress-label">处理进度</view>
+        <view class="progress-value">{{job.progress}}%</view>
+      </view>
+      <progress percent="{{job.progress}}" stroke-width="8" activeColor="#1099db" backgroundColor="#dbe8f5"></progress>
+    </view>
+
+    <view class="btn-row">
+      <view class="btn-item">
+        <button class="btn btn-danger" bindtap="cancelJob" disabled="{{job.status !== 'queued' && job.status !== 'running'}}">取消任务</button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="retryJob" disabled="{{job.status !== 'failed' && job.status !== 'canceled'}}">重试任务</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel" wx:if="{{job && job.result}}">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Pipeline Result</view>
+        <view class="section-title">流水线结果</view>
+      </view>
+      <view class="{{job.result.riskMeta.className}}">{{job.result.riskMeta.label}}</view>
+    </view>
+
+    <view class="item-title">{{job.result.recognizedCategory}}</view>
+    <view class="item-subtitle">{{job.result.professionalCategory}}</view>
+    <view class="meta-row">
+      <view class="meta-tag badge badge-neutral">ID {{job.result.shortIdentityId}}</view>
+      <view class="meta-tag badge badge-primary">{{job.result.sourceHint}}</view>
+    </view>
+
+    <view class="thumb-row">
+      <view class="thumb-item">
+        <view class="thumb-card" bindtap="previewImage" data-url="{{job.result.originalImage.previewUrl}}">
+          <image
+            wx:if="{{job.result.originalImage.renderUrl}}"
+            class="thumb-image"
+            src="{{job.result.originalImage.renderUrl}}"
+            mode="aspectFill"
+          ></image>
+          <view class="thumb-placeholder" wx:else>
+            {{job.result.originalImage.loading ? '加载原图中...' : '点击查看原图'}}
+          </view>
+        </view>
+      </view>
+      <view class="thumb-item">
+        <view class="thumb-card" bindtap="previewImage" data-url="{{job.result.enhancedImage.previewUrl}}">
+          <image
+            wx:if="{{job.result.enhancedImage.renderUrl}}"
+            class="thumb-image"
+            src="{{job.result.enhancedImage.renderUrl}}"
+            mode="aspectFill"
+          ></image>
+          <view class="thumb-placeholder" wx:else>
+            {{job.result.enhancedImage.loading ? '加载增强图中...' : '点击查看增强图'}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="note-card">类别结构：{{job.result.categoriesText}}</view>
+    <view class="note-card">OCR 文字：{{job.result.ocrTextsText}}</view>
+    <view class="note-card">{{job.result.volunteerSummary}}</view>
+
+    <view class="suggestion-card" wx:for="{{job.result.actionSuggestions}}" wx:key="text">
+      <view class="suggestion-title">{{item.text}}</view>
+      <view class="suggestion-desc">{{item.hint}}</view>
+    </view>
+
+    <view class="btn-row">
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="openIdentityDetail">进入移动复核</button>
+      </view>
+    </view>
+  </view>
+</view>

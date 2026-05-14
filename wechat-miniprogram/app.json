@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/collect/index",
+    "pages/jobs/index",
+    "pages/dashboard/index",
+    "pages/identities/index",
+    "pages/job-detail/index",
+    "pages/identity-detail/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f4fbff",
+    "navigationBarTitleText": "Ocean",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#eef8ff"
+  },
+  "permission": {
+    "scope.camera": {
+      "desc": "用于现场拍照采集水下垃圾图片"
+    }
+  },
+  "tabBar": {
+    "position": "top",
+    "color": "#5f7489",
+    "selectedColor": "#0b75d9",
+    "backgroundColor": "#f4fbff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/collect/index",
+        "text": "采集"
+      },
+      {
+        "pagePath": "pages/jobs/index",
+        "text": "任务"
+      },
+      {
+        "pagePath": "pages/dashboard/index",
+        "text": "看板"
+      },
+      {
+        "pagePath": "pages/identities/index",
+        "text": "复核"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

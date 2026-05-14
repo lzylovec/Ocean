@@ -1,0 +1,121 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - link "Ocean" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: Ocean
+        - paragraph [ref=e10]: 水下垃圾识别系统
+      - generic [ref=e11]:
+        - generic [ref=e12]: Workspace
+        - navigation "Primary" [ref=e13]:
+          - link "项目首页" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - img [ref=e15]
+            - generic [ref=e20]: 项目首页
+          - link "采集页" [ref=e21] [cursor=pointer]:
+            - /url: /collect
+            - img [ref=e22]
+            - generic [ref=e25]: 采集页
+          - link "任务历史" [ref=e27] [cursor=pointer]:
+            - /url: /jobs
+            - img [ref=e28]
+            - generic [ref=e32]: 任务历史
+          - link "数据看板" [ref=e33] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e34]
+            - generic [ref=e36]: 数据看板
+          - link "后台核对" [ref=e37] [cursor=pointer]:
+            - /url: /admin/trash
+            - img [ref=e38]
+            - generic [ref=e42]: 后台核对
+      - generic [ref=e44]:
+        - generic [ref=e45]: Status
+        - generic [ref=e46]: AI 工作流在线
+        - list [ref=e48]:
+          - listitem [ref=e49]:
+            - generic [ref=e50]: ›
+            - generic [ref=e51]: 增强、检测、OCR、语义分析已联通
+          - listitem [ref=e52]:
+            - generic [ref=e53]: ›
+            - generic [ref=e54]: 垃圾身份证支持数据库持久化
+          - listitem [ref=e55]:
+            - generic [ref=e56]: ›
+            - generic [ref=e57]: 后台页支持记录核对与状态更新
+    - generic [ref=e58]:
+      - banner [ref=e59]:
+        - heading "治理工作台 面向采集、分析、核对与治理闭环" [level=1] [ref=e61]:
+          - text: 治理工作台
+          - generic [ref=e63]: 面向采集、分析、核对与治理闭环
+        - generic [ref=e64]:
+          - button "切换主题" [ref=e65] [cursor=pointer]:
+            - img
+          - generic [ref=e66]:
+            - generic [ref=e67]: 本地开发环境
+            - generic [ref=e68]: 数据库已接通
+      - main [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - paragraph [ref=e73]:
+              - img [ref=e74]
+              - text: Collection Workspace
+            - heading "现场采集工作台" [level=1] [ref=e77]
+            - paragraph [ref=e78]: 录入采集任务，系统将自动触发增强、检测、OCR、语义分析并生成垃圾身份证。
+          - generic [ref=e79]:
+            - generic [ref=e81]:
+              - generic [ref=e83]:
+                - generic [ref=e84]:
+                  - paragraph [ref=e85]: Task Input
+                  - generic [ref=e86]: 提交采集任务
+                - generic [ref=e87]: 自动写入垃圾身份证
+              - generic [ref=e89]:
+                - generic [ref=e90]:
+                  - generic [ref=e91]: 水下图片
+                  - generic [ref=e92] [cursor=pointer]:
+                    - button "Choose File" [ref=e93]
+                    - generic:
+                      - generic:
+                        - img
+                      - paragraph: 点击上传 或拖拽文件到此处
+                      - paragraph: 支持 JPG / PNG / WebP，单张不超过 10 MB
+                - generic [ref=e95]:
+                  - generic [ref=e96]: 潜点名称
+                  - textbox "潜点名称" [ref=e97]:
+                    - /placeholder: 输入发现垃圾的潜点或海域...
+                    - text: 深圳湾东潜点
+                - generic [ref=e98]:
+                  - generic [ref=e99]: 志愿者反馈
+                  - textbox "志愿者反馈" [ref=e100]:
+                    - /placeholder: 描述现场环境、垃圾状态等补充信息...
+                    - text: 能见度差，发现塑料包装和疑似废弃渔具。
+                - button "执行 AI 流水线" [ref=e101] [cursor=pointer]:
+                  - img
+                  - text: 执行 AI 流水线
+            - generic [ref=e103]:
+              - generic [ref=e104]:
+                - paragraph [ref=e105]: Pipeline
+                - generic [ref=e106]: 本次任务会触发
+              - generic [ref=e107]:
+                - list [ref=e108]:
+                  - listitem [ref=e109]:
+                    - generic [ref=e111]: "1"
+                    - generic [ref=e113]: 图像增强：NAFNet
+                  - listitem [ref=e114]:
+                    - generic [ref=e116]: "2"
+                    - generic [ref=e118]: 目标检测：DAMO-YOLO
+                  - listitem [ref=e119]:
+                    - generic [ref=e121]: "3"
+                    - generic [ref=e123]: OCR：检测 + 识别
+                  - listitem [ref=e124]:
+                    - generic [ref=e126]: "4"
+                    - generic [ref=e127]: 语义分析：Qwen 云端推理
+                - generic [ref=e128]:
+                  - strong [ref=e130]:
+                    - img [ref=e131]
+                    - text: 结果去向
+                  - paragraph [ref=e133]: 增强、检测、OCR 和语义分析结果都会聚合写入垃圾身份证。完成后可直接在下方查看，或在后台管理页进行核对。
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e139] [cursor=pointer]:
+    - img [ref=e140]
+  - alert [ref=e143]

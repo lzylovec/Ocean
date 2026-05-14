@@ -1,0 +1,129 @@
+<view class="page-shell">
+  <view class="hero-card">
+    <view class="hero-kicker">Ocean Mobile Console</view>
+    <view class="hero-title">水下垃圾识别与治理闭环</view>
+    <view class="hero-subtitle">
+      微信小程序端已经接通上传、异步任务、治理看板和移动复核，适合在现场和巡查途中直接操作。
+    </view>
+    <view class="hero-status {{workerMeta.className}}">
+      <text>{{workerMeta.label}}</text>
+    </view>
+    <view class="hero-status-detail">{{workerMeta.detail}}</view>
+  </view>
+
+  <view class="panel panel-compact" wx:if="{{systemAlert}}">
+    <view class="section-kicker">System Alert</view>
+    <view class="section-desc">{{systemAlert}}</view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Live Metrics</view>
+        <view class="section-title">关键指标</view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{loading}}">
+      正在加载首页数据...
+    </view>
+
+    <view class="empty-state" wx:elif="{{errorMessage}}">
+      {{errorMessage}}
+    </view>
+
+    <view class="metric-row" wx:else>
+      <block wx:for="{{metrics}}" wx:key="label">
+        <view class="metric-item">
+          <view class="metric-card">
+            <view class="metric-label">{{item.label}}</view>
+            <view class="metric-value">{{item.value}}</view>
+            <view class="metric-note">{{item.note}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Quick Actions</view>
+        <view class="section-title">业务入口</view>
+      </view>
+    </view>
+
+    <view class="action-list">
+      <block wx:for="{{quickActions}}" wx:key="title">
+        <view class="action-card" bindtap="openTab" data-path="{{item.pagePath}}">
+          <view class="action-title">{{item.title}}</view>
+          <view class="action-desc">{{item.description}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Recent Queue</view>
+        <view class="section-title">最近入库记录</view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{!recentIdentities.length && !loading}}">
+      当前还没有垃圾身份证记录。
+    </view>
+
+    <view class="list-item" wx:for="{{recentIdentities}}" wx:key="identityId" bindtap="openIdentityDetail" data-id="{{item.identityId}}">
+      <view class="item-head">
+        <view>
+          <view class="item-title">{{item.recognizedCategory}}</view>
+          <view class="item-subtitle">{{item.professionalCategory}} · {{item.siteName}}</view>
+        </view>
+        <view class="{{item.reviewMeta.className}}">{{item.reviewMeta.label}}</view>
+      </view>
+      <view class="meta-row">
+        <view class="meta-tag {{item.riskMeta.className}}">{{item.riskMeta.label}}</view>
+        <view class="meta-tag badge badge-neutral">ID {{item.shortIdentityId}}</view>
+      </view>
+      <view class="note-card">{{item.volunteerSummary}}</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Top Sites</view>
+        <view class="section-title">重点潜点</view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{!topSites.length && !loading}}">
+      当前没有可展示的潜点聚合数据。
+    </view>
+
+    <view class="site-row" wx:for="{{topSites}}" wx:key="name">
+      <view>
+        <view class="site-name">{{item.name}}</view>
+        <view class="site-desc">主类别：{{item.topCategory}}</view>
+      </view>
+      <view class="site-risk">风险 {{item.risk}}</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Model Stack</view>
+        <view class="section-title">运行中的 AI 组件</view>
+      </view>
+    </view>
+
+    <view class="stack-list">
+      <view class="stack-item" wx:for="{{stackItems}}" wx:key="*this">
+        {{item}}
+      </view>
+    </view>
+  </view>
+</view>

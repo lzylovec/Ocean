@@ -1,0 +1,104 @@
+<view class="page-shell">
+  <view class="hero-card">
+    <view class="hero-kicker">Mobile Review</view>
+    <view class="hero-title">垃圾身份证移动复核</view>
+    <view class="hero-subtitle">
+      在手机上查看识别结果、风险等级、OCR 线索和志愿者摘要，并进入单条记录完成审核更新。
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Review Summary</view>
+        <view class="section-title">状态概览</view>
+      </view>
+    </view>
+
+    <view class="chip-row">
+      <view class="chip-item">待复核 {{counts.pendingReview}}</view>
+      <view class="chip-item">待补线索 {{counts.needsOcr}}</view>
+      <view class="chip-item">已确认 {{counts.confirmed}}</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Filters</view>
+        <view class="section-title">筛选条件</view>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="field-label">搜索 ID / 潜点 / 类别</view>
+      <input class="field-input" value="{{q}}" bindinput="onSearchInput" confirm-type="search" bindconfirm="applyFilters" placeholder="输入记录 ID、潜点或类别" />
+    </view>
+
+    <view class="chip-row">
+      <view
+        wx:for="{{reviewOptions}}"
+        wx:key="value"
+        class="chip-item {{reviewStatus === item.value ? 'chip-item-active' : ''}}"
+        bindtap="selectReviewStatus"
+        data-status="{{item.value}}"
+      >
+        {{item.label}}
+      </view>
+    </view>
+
+    <view class="btn-row">
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="applyFilters">应用筛选</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel panel-compact" wx:if="{{errorMessage}}">
+    <view class="section-kicker">Request Error</view>
+    <view class="section-desc">{{errorMessage}}</view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Identity List</view>
+        <view class="section-title">复核列表</view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{loading && !items.length}}">
+      正在加载垃圾身份证列表...
+    </view>
+
+    <view class="empty-state" wx:elif="{{!items.length}}">
+      当前筛选条件下没有记录。
+    </view>
+
+    <view class="list-item" wx:for="{{items}}" wx:key="identityId" bindtap="openDetail" data-id="{{item.identityId}}">
+      <view class="item-head">
+        <view>
+          <view class="item-title">{{item.recognizedCategory}}</view>
+          <view class="item-subtitle">{{item.professionalCategory}} · {{item.siteName}}</view>
+        </view>
+        <view class="{{item.reviewMeta.className}}">{{item.reviewMeta.label}}</view>
+      </view>
+
+      <view class="meta-row">
+        <view class="meta-tag {{item.riskMeta.className}}">{{item.riskMeta.label}}</view>
+        <view class="meta-tag badge badge-neutral">ID {{item.shortIdentityId}}</view>
+        <view class="meta-tag badge badge-primary">{{item.sourceHint}}</view>
+      </view>
+
+      <view class="note-card">{{item.volunteerSummary}}</view>
+      <view class="note-card">OCR：{{item.ocrTextsText}}</view>
+      <view class="note-card">标签：{{item.volunteerTagsText}}</view>
+
+      <view class="btn-row">
+        <view class="btn-item">
+          <button class="btn btn-secondary" catchtap="openDetail" data-id="{{item.identityId}}">查看详情</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,151 @@
+<view class="page-shell">
+  <view class="hero-card">
+    <view class="hero-kicker">Async Queue</view>
+    <view class="hero-title">任务历史与队列状态</view>
+    <view class="hero-subtitle">
+      小程序端同样支持查看任务分页、排队状态、失败原因，并可直接取消或重试任务。
+    </view>
+    <view class="hero-status {{workerMeta.className}}">
+      <text>{{workerMeta.label}}</text>
+    </view>
+    <view class="hero-status-detail">{{workerMeta.detail}}</view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Queue Summary</view>
+        <view class="section-title">运行概览</view>
+      </view>
+    </view>
+
+    <view class="chip-row">
+      <view class="chip-item">排队 {{counts.queued}}</view>
+      <view class="chip-item">执行 {{counts.running}}</view>
+      <view class="chip-item">完成 {{counts.succeeded}}</view>
+      <view class="chip-item">失败 {{counts.failed}}</view>
+      <view class="chip-item">取消 {{counts.canceled}}</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Filters</view>
+        <view class="section-title">筛选条件</view>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="field-label">搜索任务 / 潜点 / 类别</view>
+      <input class="field-input" value="{{q}}" bindinput="onSearchInput" confirm-type="search" bindconfirm="applyFilters" placeholder="输入任务 ID、潜点或类别关键词" />
+    </view>
+
+    <view class="chip-row">
+      <view
+        wx:for="{{statusOptions}}"
+        wx:key="value"
+        class="chip-item {{status === item.value ? 'chip-item-active' : ''}}"
+        bindtap="selectStatus"
+        data-status="{{item.value}}"
+      >
+        {{item.label}}
+      </view>
+    </view>
+
+    <view class="btn-row">
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="applyFilters">应用筛选</button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-secondary" bindtap="refreshList">刷新列表</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel panel-compact" wx:if="{{errorMessage}}">
+    <view class="section-kicker">Request Error</view>
+    <view class="section-desc">{{errorMessage}}</view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Queue List</view>
+        <view class="section-title">任务列表</view>
+        <view class="section-desc">第 {{pagination.page}} / {{pagination.totalPages}} 页</view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{loading && !items.length}}">
+      正在加载任务列表...
+    </view>
+
+    <view class="empty-state" wx:elif="{{!items.length}}">
+      当前筛选条件下没有任务。
+    </view>
+
+    <view class="list-item" wx:for="{{items}}" wx:key="jobId" bindtap="openDetail" data-id="{{item.jobId}}">
+      <view class="item-head">
+        <view>
+          <view class="item-title">任务 {{item.shortJobId}}</view>
+          <view class="item-subtitle">{{item.siteName}} · {{item.recognizedCategory}}</view>
+        </view>
+        <view class="{{item.statusMeta.className}}">{{item.statusMeta.label}}</view>
+      </view>
+
+      <view class="job-meta-line">阶段：{{item.stageLabel}}</view>
+      <view class="job-meta-line">信息：{{item.message}}</view>
+      <view class="job-meta-line" wx:if="{{item.errorDetail}}">失败原因：{{item.errorDetail}}</view>
+
+      <view class="progress-block">
+        <view class="progress-head">
+          <view class="progress-label">进度</view>
+          <view class="progress-value">{{item.progress}}%</view>
+        </view>
+        <progress percent="{{item.progress}}" stroke-width="8" activeColor="#1099db" backgroundColor="#dbe8f5"></progress>
+      </view>
+
+      <view class="meta-row">
+        <view class="meta-tag badge badge-neutral">{{item.reuseLabel}}</view>
+        <view class="meta-tag badge badge-neutral">重试 {{item.retryCount}} 次</view>
+        <view class="meta-tag badge badge-neutral">更新 {{item.updatedAtText}}</view>
+      </view>
+
+      <view class="btn-row">
+        <view class="btn-item">
+          <button class="btn btn-secondary" catchtap="openDetail" data-id="{{item.jobId}}">查看详情</button>
+        </view>
+        <view class="btn-item">
+          <button
+            class="btn btn-danger"
+            catchtap="cancelJob"
+            data-id="{{item.jobId}}"
+            disabled="{{item.status !== 'queued' && item.status !== 'running'}}"
+          >
+            取消任务
+          </button>
+        </view>
+        <view class="btn-item">
+          <button
+            class="btn btn-primary"
+            catchtap="retryJob"
+            data-id="{{item.jobId}}"
+            disabled="{{item.status !== 'failed' && item.status !== 'canceled'}}"
+          >
+            重试任务
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <view class="btn-row" wx:if="{{pagination.hasPrev || pagination.hasNext}}">
+      <view class="btn-item" wx:if="{{pagination.hasPrev}}">
+        <button class="btn btn-secondary" bindtap="loadPrev" loading="{{loading}}">上一页</button>
+      </view>
+      <view class="btn-item" wx:if="{{pagination.hasNext}}">
+        <button class="btn btn-secondary" bindtap="loadMore" loading="{{loading}}">下一页</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,13 @@
+[     120ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_0rd6aq~._.js:2431
+[     133ms] [LOG] [HMR] connected @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_0rd6aq~._.js:2431
+[  389422ms] [LOG] [HMR] connected @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_0rd6aq~._.js:2431
+[  459671ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=G6UtmZBXnclIaqmK3sS1s' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_client_0~.5ntm._.js:13299
+[  459858ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:8000/api/v1/ai/pipeline-jobs?page=1&pageSize=12:0
+[  460673ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=G6UtmZBXnclIaqmK3sS1s' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_client_0~.5ntm._.js:13299
+[  460864ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:8000/api/v1/ai/pipeline-jobs?page=1&pageSize=12:0
+[  461676ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=G6UtmZBXnclIaqmK3sS1s' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_client_0~.5ntm._.js:13299
+[  462679ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=G6UtmZBXnclIaqmK3sS1s' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_client_0~.5ntm._.js:13299
+[  462870ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:8000/api/v1/ai/pipeline-jobs?page=1&pageSize=12:0
+[  463681ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=G6UtmZBXnclIaqmK3sS1s' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_client_0~.5ntm._.js:13299
+[  466878ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:8000/api/v1/ai/pipeline-jobs?page=1&pageSize=12:0
+[  468695ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3000/_next/webpack-hmr?id=G6UtmZBXnclIaqmK3sS1s' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_client_0~.5ntm._.js:13299

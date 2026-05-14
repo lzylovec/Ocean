@@ -1,0 +1,134 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - link "Ocean" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: Ocean
+        - paragraph [ref=e10]: 水下垃圾识别系统
+      - generic [ref=e11]:
+        - generic [ref=e12]: Workspace
+        - navigation "Primary" [ref=e13]:
+          - link "项目首页" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - img [ref=e15]
+            - generic [ref=e20]: 项目首页
+          - link "采集页" [ref=e21] [cursor=pointer]:
+            - /url: /collect
+            - img [ref=e22]
+            - generic [ref=e25]: 采集页
+          - link "任务历史" [ref=e26] [cursor=pointer]:
+            - /url: /jobs
+            - img [ref=e27]
+            - generic [ref=e31]: 任务历史
+          - link "数据看板" [ref=e32] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e33]
+            - generic [ref=e35]: 数据看板
+          - link "后台核对" [ref=e37] [cursor=pointer]:
+            - /url: /admin/trash
+            - img [ref=e38]
+            - generic [ref=e42]: 后台核对
+      - generic [ref=e44]:
+        - generic [ref=e45]: Status
+        - generic [ref=e46]: AI 工作流在线
+        - list [ref=e48]:
+          - listitem [ref=e49]:
+            - generic [ref=e50]: ›
+            - generic [ref=e51]: 增强、检测、OCR、语义分析已联通
+          - listitem [ref=e52]:
+            - generic [ref=e53]: ›
+            - generic [ref=e54]: 垃圾身份证支持数据库持久化
+          - listitem [ref=e55]:
+            - generic [ref=e56]: ›
+            - generic [ref=e57]: 后台页支持记录核对与状态更新
+    - generic [ref=e58]:
+      - banner [ref=e59]:
+        - heading "治理工作台 面向采集、分析、核对与治理闭环" [level=1] [ref=e61]:
+          - text: 治理工作台
+          - generic [ref=e63]: 面向采集、分析、核对与治理闭环
+        - generic [ref=e64]:
+          - button "切换主题" [disabled]:
+            - img
+          - generic [ref=e65]:
+            - generic [ref=e66]: 本地开发环境
+            - generic [ref=e67]: 数据库已接通
+      - main [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - paragraph [ref=e72]:
+              - img [ref=e73]
+              - text: Dashboard
+            - heading "治理看板" [level=1] [ref=e75]
+            - paragraph [ref=e76]: 看板同时展示静态治理指标和实时入库记录，方便从“模型结果”回到“业务动作”。
+          - generic [ref=e77]:
+            - generic [ref=e79]:
+              - generic [ref=e80]:
+                - generic [ref=e81]:
+                  - paragraph [ref=e82]: Live Metrics
+                  - generic [ref=e83]: 当前治理状态
+                - generic [ref=e84]: 实时读取后端接口
+              - generic [ref=e85]:
+                - generic [ref=e86]:
+                  - generic [ref=e87]:
+                    - generic [ref=e89]:
+                      - generic [ref=e90]: 待复核记录
+                      - img [ref=e92]
+                    - strong [ref=e94]: "0"
+                    - paragraph [ref=e95]: 来自真实垃圾身份证入库结果
+                  - generic [ref=e96]:
+                    - generic [ref=e98]:
+                      - generic [ref=e99]: 高风险样本
+                      - img [ref=e101]
+                    - strong [ref=e103]: "0"
+                    - paragraph [ref=e104]: 优先人工核对与复查
+                  - generic [ref=e105]:
+                    - generic [ref=e107]:
+                      - generic [ref=e108]: 待补 OCR
+                      - img [ref=e110]
+                    - strong [ref=e113]: "0"
+                    - paragraph [ref=e114]: 文字线索不足的记录数量
+                - generic [ref=e116]:
+                  - img [ref=e117]
+                  - text: 正在加载图表数据...
+            - generic [ref=e120]:
+              - generic [ref=e121]:
+                - paragraph [ref=e122]: Model Status
+                - generic [ref=e123]: 运行中的 AI 组件
+              - list [ref=e125]:
+                - listitem [ref=e126]:
+                  - generic [ref=e130]: 增强：NAFNet 本地推理
+                - listitem [ref=e131]:
+                  - generic [ref=e135]: 检测：DAMO-YOLO ONNX 本地执行
+                - listitem [ref=e136]:
+                  - generic [ref=e140]: OCR：检测 + 识别双阶段
+                - listitem [ref=e141]:
+                  - generic [ref=e145]: 语义：Qwen 云端推理
+          - generic [ref=e146]:
+            - generic [ref=e148]:
+              - generic [ref=e149]:
+                - paragraph [ref=e150]: Recent Identities
+                - generic [ref=e151]: 最近入库记录
+              - generic [ref=e154]:
+                - img [ref=e155]
+                - generic [ref=e158]: 正在加载记录...
+            - generic [ref=e160]:
+              - generic [ref=e161]:
+                - paragraph [ref=e162]: Hotspot Overview
+                - generic [ref=e163]: 重点潜点
+              - table [ref=e166]:
+                - rowgroup [ref=e167]:
+                  - row "潜点 主垃圾类型 风险" [ref=e168]:
+                    - columnheader "潜点" [ref=e169]
+                    - columnheader "主垃圾类型" [ref=e170]
+                    - columnheader "风险" [ref=e171]
+                - rowgroup [ref=e172]:
+                  - row "加载中..." [ref=e173]:
+                    - cell "加载中..." [ref=e174]:
+                      - generic [ref=e175]:
+                        - img [ref=e176]
+                        - text: 加载中...
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e184] [cursor=pointer]:
+    - img [ref=e185]

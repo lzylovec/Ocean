@@ -1,8 +1,9 @@
 export const navItems = [
   { href: "/", label: "项目首页" },
   { href: "/collect", label: "采集页" },
-  { href: "/dashboard", label: "数据看板" },
+  { href: "/jobs", label: "任务历史" },
   { href: "/admin/trash", label: "后台核对" },
+  { href: "/dashboard", label: "数据看板" },
 ];
 
 export const challengePoints = [
@@ -66,7 +67,7 @@ export const trashIdentitySamples = [
     site: "三亚礁盘区",
     source: "岸线消费与海流输入",
     confidence: "0.78",
-    status: "待补 OCR",
+    status: "待补文字线索",
   },
 ];
 

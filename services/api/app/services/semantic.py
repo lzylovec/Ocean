@@ -4,7 +4,7 @@ import json
 import logging
 from functools import lru_cache
 
-from openai import OpenAI
+from openai import APITimeoutError, OpenAI
 
 from services.api.app.config import settings
 from services.api.app.schemas import VolunteerSemanticResult
@@ -90,23 +90,37 @@ class SemanticService:
                 },
             ]
 
-            for attempt in range(2):
-                completion = self._get_client().chat.completions.create(
-                    model=settings.modelscope_llm_model,
-                    temperature=0.1,
-                    messages=messages,
-                )
+            max_attempts = max(settings.modelscope_llm_max_attempts, 1)
+            for attempt in range(max_attempts):
+                try:
+                    completion = self._get_client().chat.completions.create(
+                        model=settings.modelscope_llm_model,
+                        temperature=0.1,
+                        messages=messages,
+                    )
+                except APITimeoutError as error:
+                    last_error = error
+                    logger.warning(
+                        "Semantic request timed out on attempt %s/%s, fallback to rules.",
+                        attempt + 1,
+                        max_attempts,
+                    )
+                    break
+
                 payload_dict = completion.model_dump()
                 choices = payload_dict.get("choices") or []
                 if not choices:
                     last_error = ValueError(
                         f"Semantic response returned no choices: {payload_dict}"
                     )
-                    logger.warning(
-                        "Semantic response had no choices on attempt %s, retrying.",
-                        attempt + 1,
-                    )
-                    continue
+                    if attempt + 1 < max_attempts:
+                        logger.warning(
+                            "Semantic response had no choices on attempt %s/%s, retrying.",
+                            attempt + 1,
+                            max_attempts,
+                        )
+                        continue
+                    raise last_error
 
                 message = choices[0].get("message") or {}
                 content = message.get("content") or ""
@@ -288,6 +302,8 @@ class SemanticService:
         return OpenAI(
             base_url=settings.modelscope_llm_base_url,
             api_key=settings.modelscope_llm_api_key,
+            timeout=settings.modelscope_llm_timeout_seconds,
+            max_retries=0,
         )
 
 

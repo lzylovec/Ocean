@@ -49,3 +49,59 @@ class TrashIdentityRecord(Base):
         onupdate=func.now(),
         nullable=False,
     )
+
+
+class PipelineJobRecord(Base):
+    __tablename__ = "pipeline_jobs"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    job_id: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    status: Mapped[str] = mapped_column(String(32), index=True, default="queued")
+    stage: Mapped[str] = mapped_column(String(64), default="queued")
+    progress: Mapped[int] = mapped_column(default=0)
+    message: Mapped[str] = mapped_column(String(255), default="任务已排队")
+    error_detail: Mapped[str | None] = mapped_column(Text, nullable=True)
+    identity_id: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
+    request_fingerprint: Mapped[str | None] = mapped_column(
+        String(64), nullable=True, index=True
+    )
+    media_hash: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
+    retry_count: Mapped[int] = mapped_column(default=0)
+    cache_hit_count: Mapped[int] = mapped_column(default=0)
+    inflight_reuse_count: Mapped[int] = mapped_column(default=0)
+    last_reuse_reason: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    payload: Mapped[dict] = mapped_column(JSON, default=dict)
+    result_payload: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    canceled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    timeout_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_reused_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
+
+
+class PipelineWorkerRecord(Base):
+    __tablename__ = "pipeline_workers"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    worker_id: Mapped[str] = mapped_column(String(128), unique=True, index=True)
+    status: Mapped[str] = mapped_column(String(32), default="idle", index=True)
+    current_job_id: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
+    last_claimed_job_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    last_completed_job_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    heartbeat_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )

@@ -4,72 +4,79 @@
 
 @layer base {
   :root {
-    --background: 222 35% 6%;
-    --foreground: 210 40% 98%;
-
-    --card: 222 35% 8%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222 35% 8%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 187 88% 55%;
-    --primary-foreground: 222 35% 8%;
-
-    --secondary: 199 89% 55%;
-    --secondary-foreground: 222 35% 8%;
-
-    --muted: 222 18% 14%;
-    --muted-foreground: 215 18% 72%;
-
-    --accent: 222 18% 14%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 70% 40%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 222 18% 16%;
-    --input: 222 18% 16%;
-    --ring: 187 88% 55%;
-
-    --radius: 0.9rem;
-
-    --ocean-glow-1: 187 88% 55%;
-    --ocean-glow-2: 199 89% 55%;
-    --ocean-mist: 215 20% 65%;
-  }
-
-  .light {
-    --background: 210 50% 97%;
-    --foreground: 208 54% 18%;
+    --background: 210 50% 98%;
+    /* Very light blue/white - Clean Ocean Surface */
+    --foreground: 220 50% 15%;
+    /* Deep navy text for contrast */
 
     --card: 0 0% 100%;
-    --card-foreground: 208 54% 18%;
+    /* Pure white cards */
+    --card-foreground: 220 50% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 208 54% 18%;
+    --popover-foreground: 220 50% 15%;
 
-    --primary: 187 88% 40%;
+    --primary: 210 100% 50%;
+    /* Clear, bright Ocean Blue */
     --primary-foreground: 0 0% 100%;
+    /* White text on primary */
 
-    --secondary: 199 89% 42%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 195 80% 90%;
+    /* Very soft cyan/blue for subtle backgrounds */
+    --secondary-foreground: 210 100% 40%;
+    /* Deeper blue text on secondary */
 
-    --muted: 210 50% 94%;
-    --muted-foreground: 208 20% 45%;
+    --muted: 210 30% 94%;
+    /* Light grey-blue for muted areas */
+    --muted-foreground: 215 20% 45%;
+    /* Mid-grey text */
 
-    --accent: 210 50% 94%;
-    --accent-foreground: 187 88% 40%;
+    --accent: 195 80% 90%;
+    --accent-foreground: 210 100% 40%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 40% 88%;
-    --input: 210 40% 88%;
-    --ring: 187 88% 40%;
+    --border: 210 30% 90%;
+    /* Very soft border */
+    --input: 210 30% 90%;
+    --ring: 210 100% 50%;
 
-    --ocean-glow-1: 187 88% 40%;
-    --ocean-glow-2: 199 89% 42%;
+    --radius: 0.5rem;
+    /* Soft, clean rounded corners */
+  }
+
+  .light {
+    --background: 210 50% 98%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --primary: 189 94% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 70% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 189 94% 35%;
+
+    --ocean-glow-1: 189 94% 35%;
+    --ocean-glow-2: 220 70% 45%;
     --ocean-mist: 215 25% 55%;
   }
 
@@ -78,7 +85,7 @@
   }
 
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
+    @apply bg-background text-foreground overflow-x-hidden selection:bg-primary/30 selection:text-primary;
   }
 
   html {
@@ -88,40 +95,37 @@
 
 @layer utilities {
   .glass {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06));
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 22px 80px rgba(0, 0, 0, 0.55);
+    background: rgba(16, 24, 39, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .glass-card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
-    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    background: rgba(16, 24, 39, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
   }
 
   .glass-card:hover {
-    transform: translateY(-1px);
-    border-color: rgba(255, 255, 255, 0.18);
-    box-shadow: 0 24px 72px rgba(0, 0, 0, 0.55);
+    background: rgba(25, 35, 55, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
   }
 
   .glass-panel {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
-    border-right: 1px solid rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(16px);
-    box-shadow: 10px 0 60px rgba(0, 0, 0, 0.45);
+    background: rgba(10, 15, 24, 0.95);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+    color: hsl(var(--primary));
   }
 
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
@@ -129,11 +133,11 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-slate-200/80 rounded-full;
+    @apply bg-white/10 rounded-full;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-slate-300;
+    @apply bg-white/20;
   }
 
   .ocean-backdrop {
@@ -142,7 +146,51 @@
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
-    background: linear-gradient(135deg, #0b1220, #070b12);
+    background: #0a192f;
+    /* Base deep ocean blue */
+  }
+
+  .ocean-water {
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 0%, rgba(0, 150, 255, 0.25) 0%, transparent 70%),
+      radial-gradient(circle at 50% 100%, rgba(4, 10, 20, 1) 0%, transparent 80%);
+    opacity: 0.9;
+  }
+
+  .ocean-current-container {
+    position: absolute;
+    inset: -20%;
+    width: 140%;
+    height: 140%;
+    filter: url(#ocean-current-distortion) blur(20px);
+    mix-blend-mode: color-dodge;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  .ocean-current {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .current-1 {
+    background: linear-gradient(120deg, transparent 10%, rgba(0, 255, 200, 0.4) 30%, rgba(0, 150, 255, 0.2) 50%, transparent 70%);
+    animation: currentFlow 20s linear infinite;
+  }
+
+  .current-2 {
+    background: linear-gradient(60deg, transparent 20%, rgba(0, 200, 255, 0.3) 40%, rgba(0, 100, 255, 0.15) 60%, transparent 80%);
+    animation: currentFlow 28s linear infinite reverse;
+  }
+
+  .current-3 {
+    background: radial-gradient(ellipse at 50% 50%, rgba(0, 255, 220, 0.2) 0%, transparent 60%);
+    animation: currentPulse 15s ease-in-out infinite alternate;
   }
 
   .ocean-fog {
@@ -154,13 +202,13 @@
   }
 
   .ocean-fog-1 {
-    background: radial-gradient(circle at 42% 35%, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 62%);
-    animation: oceanFogA 10s ease-in-out infinite;
+    background: radial-gradient(circle at 42% 35%, rgba(0, 230, 255, 0.15), rgba(255, 255, 255, 0) 62%);
+    animation: oceanFogA 20s ease-in-out infinite alternate;
   }
 
   .ocean-fog-2 {
-    background: radial-gradient(circle at 60% 45%, hsl(var(--ocean-glow-1) / 0.22), rgba(0, 0, 0, 0) 62%);
-    animation: oceanFogB 14s ease-in-out infinite;
+    background: radial-gradient(circle at 60% 45%, rgba(0, 180, 255, 0.15), rgba(0, 0, 0, 0) 62%);
+    animation: oceanFogB 25s ease-in-out infinite alternate;
   }
 
   .ocean-scan {
@@ -168,45 +216,214 @@
     left: -50%;
     top: 38%;
     width: 200%;
-    height: 2px;
-    transform: rotate(-10deg);
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0), hsl(var(--ocean-glow-2) / 0.26), rgba(0, 0, 0, 0));
-    opacity: 0.10;
-    animation: oceanScan 8s ease-in-out infinite;
+    height: 3px;
+    transform: rotate(-5deg);
+    background: linear-gradient(90deg, transparent, rgba(0, 230, 255, 0.3), transparent);
+    opacity: 0.5;
+    animation: oceanScan 10s linear infinite;
+    box-shadow: 0 0 30px 5px rgba(0, 230, 255, 0.15);
   }
 
-  .light .ocean-fog-2 {
-    background: radial-gradient(circle at 60% 45%, hsl(var(--ocean-glow-1) / 0.10), rgba(0, 0, 0, 0) 62%);
-  }
-
-  .light .ocean-scan {
-    opacity: 0.06;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.16), rgba(0, 0, 0, 0));
-  }
-
-  @keyframes oceanFogA {
-    0% { transform: translate(-7%, -2%) rotate(0deg); }
-    50% { transform: translate(7%, 2%) rotate(18deg); }
-    100% { transform: translate(-7%, -2%) rotate(0deg); }
-  }
-
-  @keyframes oceanFogB {
-    0% { transform: translate(6%, -3%) rotate(0deg); }
-    50% { transform: translate(-6%, 3%) rotate(-14deg); }
-    100% { transform: translate(6%, -3%) rotate(0deg); }
-  }
-
-  @keyframes oceanScan {
-    0% { transform: translateX(-12%) rotate(-10deg); opacity: 0.08; }
-    45% { opacity: 0.60; }
-    100% { transform: translateX(12%) rotate(-10deg); opacity: 0.06; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ocean-fog-1,
-    .ocean-fog-2,
-    .ocean-scan {
-      animation: none !important;
+  @keyframes currentFlow {
+    0% {
+      transform: translate(-10%, -10%) rotate(0deg);
     }
+
+    50% {
+      transform: translate(10%, 10%) rotate(5deg);
+    }
+
+    100% {
+      transform: translate(-10%, -10%) rotate(0deg);
+    }
+  }
+
+  @keyframes currentPulse {
+    0% {
+      transform: scale(1) translate(0, 0);
+      opacity: 0.3;
+    }
+
+    50% {
+      transform: scale(1.2) translate(-5%, 5%);
+      opacity: 0.6;
+    }
+
+    100% {
+      transform: scale(1) translate(0, 0);
+      opacity: 0.3;
+    }
+  }
+
+  /* Particle Animation Keyframes */
+  @keyframes floatUp {
+    0% {
+      transform: translateY(110vh) translateX(0) scale(1);
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 0.8;
+    }
+
+    80% {
+      opacity: 0.8;
+    }
+
+    100% {
+      transform: translateY(-10vh) translateX(50px) scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes floatUpSlow {
+    0% {
+      transform: translateY(110vh) translateX(-20px) scale(0.8);
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 0.5;
+    }
+
+    80% {
+      opacity: 0.5;
+    }
+
+    100% {
+      transform: translateY(-10vh) translateX(-60px) scale(1.2);
+      opacity: 0;
+    }
+  }
+
+  /* Wave Animations */
+  @keyframes wave-front {
+    0% {
+      background-position: 0 bottom;
+    }
+
+    100% {
+      background-position: 1000px bottom;
+    }
+  }
+
+  @keyframes wave-back {
+    0% {
+      background-position: 1000px bottom;
+    }
+
+    100% {
+      background-position: 0 bottom;
+    }
+  }
+
+  @keyframes wave-spin {
+    from {
+      transform: translateX(-50%) rotate(0deg);
+    }
+
+    to {
+      transform: translateX(-50%) rotate(360deg);
+    }
+  }
+
+  @keyframes wave-spin-reverse {
+    from {
+      transform: translateX(-50%) rotate(360deg);
+    }
+
+    to {
+      transform: translateX(-50%) rotate(0deg);
+    }
+  }
+
+  .wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-position: 0 bottom;
+  }
+}
+
+.light .glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+.light .glass-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+}
+
+.light .glass-card:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+}
+
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.8);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 10px 0 60px rgba(0, 0, 0, 0.02);
+}
+
+.light .ocean-backdrop {
+  background: #f8fafc;
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(0, 200, 255, 0.05), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(58, 123, 213, 0.05), transparent 50%);
+}
+
+@keyframes oceanFogA {
+  0% {
+    transform: translate(-5%, -2%) scale(1);
+  }
+
+  100% {
+    transform: translate(5%, 2%) scale(1.1);
+  }
+}
+
+@keyframes oceanFogB {
+  0% {
+    transform: translate(5%, -3%) scale(1.1);
+  }
+
+  100% {
+    transform: translate(-5%, 3%) scale(1);
+  }
+}
+
+@keyframes oceanScan {
+  0% {
+    transform: translateY(-50vh) rotate(-5deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.3;
+  }
+
+  90% {
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: translateY(150vh) rotate(-5deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ocean-fog-1,
+  .ocean-fog-2,
+  .ocean-scan {
+    animation: none !important;
   }
 }

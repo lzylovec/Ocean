@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config: Config = {
   darkMode: ["class"],
@@ -52,8 +53,34 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "flow-slow": "flow 20s linear infinite",
+        "flow-reverse": "flow 25s linear infinite reverse",
+        "pulse-slow": "pulse-opacity 8s ease-in-out infinite alternate",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "flow": {
+          "0%": { transform: "translate(-5%, -5%) rotate(0deg)" },
+          "50%": { transform: "translate(5%, 5%) rotate(2deg)" },
+          "100%": { transform: "translate(-5%, -5%) rotate(0deg)" },
+        },
+        "pulse-opacity": {
+          "0%": { opacity: "0.2", transform: "scale(0.9)" },
+          "100%": { opacity: "0.5", transform: "scale(1.1)" },
+        }
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 };
 export default config;

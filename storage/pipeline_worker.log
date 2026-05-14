@@ -1,0 +1,530 @@
+2026-05-10 09:55:28,963 INFO ocean.pipeline_worker: Pipeline worker started. once=False max_jobs=0 poll_seconds=2
+2026-05-10 09:55:33,519 INFO ocean.pipeline_worker: Claimed job PJ-1B5681F17B
+2026-05-10 09:55:41,116 - modelscope - INFO - initiate model from /Users/liuzhenyu_macbookpro/.cache/modelscope/hub/models/iic/cv_nafnet_image-denoise_sidd
+2026-05-10 09:55:41,116 - modelscope - INFO - initiate model from location /Users/liuzhenyu_macbookpro/.cache/modelscope/hub/models/iic/cv_nafnet_image-denoise_sidd.
+2026-05-10 09:55:41,117 - modelscope - INFO - initialize model from /Users/liuzhenyu_macbookpro/.cache/modelscope/hub/models/iic/cv_nafnet_image-denoise_sidd
+2026-05-10 09:55:41,321 - modelscope - INFO - Loading NAFNet model from /Users/liuzhenyu_macbookpro/.cache/modelscope/hub/models/iic/cv_nafnet_image-denoise_sidd/pytorch_model.pt, with param key: [params].
+2026-05-10 09:55:41,386 - modelscope - INFO - load model done.
+2026-05-10 09:55:41,395 - modelscope - INFO - cuda is not available, using cpu instead.
+2026-05-10 09:55:41,396 - modelscope - INFO - load image denoise model done
+2026-05-10 09:56:57,368 INFO httpx: HTTP Request: POST https://api-inference.modelscope.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-10 09:56:57,372 ERROR services.api.app.services.semantic: Semantic LLM analysis failed, fallback to rules.
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/app/services/semantic.py", line 123, in _analyze_with_llm
+    raise last_error
+ValueError: Semantic response returned no choices: {'id': 'chatcmpl-5364c8cd-c83c-9a66-abf8-fe6f70e285d0', 'choices': None, 'created': 0, 'model': 'Qwen/Qwen3.5-397B-A17B', 'object': '', 'service_tier': None, 'system_fingerprint': '', 'usage': {'completion_tokens': 0, 'prompt_tokens': 0, 'total_tokens': 0, 'completion_tokens_details': None, 'prompt_tokens_details': None}}
+2026-05-10 09:57:02,806 INFO ocean.pipeline_worker: Finished job PJ-1B5681F17B
+2026-05-10 09:59:32,554 INFO ocean.pipeline_worker: Claimed job PJ-75F61C6324
+2026-05-10 10:01:06,205 WARNING services.api.app.services.semantic: Semantic request timed out on attempt 1/1, fallback to rules.
+2026-05-10 10:01:06,205 ERROR services.api.app.services.semantic: Semantic LLM analysis failed, fallback to rules.
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+        pool_request.request
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+        self.READ_NUM_BYTES, timeout=timeout
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_backends/sync.py", line 126, in read
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadTimeout: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1019, in request
+    response = self._send_request(
+        request,
+        stream=stream or self._should_stream_response_body(request=request),
+        **kwargs,
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_client.py", line 400, in _send_request
+    return self._send_with_auth_retry(request, stream=stream, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_client.py", line 378, in _send_with_auth_retry
+    response = super()._send_request(request, stream=stream, **kwargs)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 947, in _send_request
+    return self._client.send(request, stream=stream, **kwargs)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadTimeout: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/app/services/semantic.py", line 144, in _analyze_with_llm
+    raise last_error
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/app/services/semantic.py", line 96, in _analyze_with_llm
+    completion = self._get_client().chat.completions.create(
+        model=settings.modelscope_llm_model,
+        temperature=0.1,
+        messages=messages,
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_utils/_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/resources/chat/completions/completions.py", line 1211, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1314, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1037, in request
+    raise APITimeoutError(request=request) from err
+openai.APITimeoutError: Request timed out.
+2026-05-10 10:01:12,159 INFO ocean.pipeline_worker: Finished job PJ-75F61C6324
+2026-05-10 10:07:51,367 INFO ocean.pipeline_worker: Claimed job PJ-CA8371DAE5
+2026-05-10 10:08:09,045 INFO httpx: HTTP Request: POST https://api-inference.modelscope.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-10 10:08:09,046 ERROR services.api.app.services.semantic: Semantic LLM analysis failed, fallback to rules.
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/app/services/semantic.py", line 123, in _analyze_with_llm
+    raise last_error
+ValueError: Semantic response returned no choices: {'id': 'chatcmpl-771f5c9d-ed27-98bd-93e4-8a689d187941', 'choices': None, 'created': 0, 'model': 'Qwen/Qwen3.5-397B-A17B', 'object': '', 'service_tier': None, 'system_fingerprint': '', 'usage': {'completion_tokens': 0, 'prompt_tokens': 0, 'total_tokens': 0, 'completion_tokens_details': None, 'prompt_tokens_details': None}}
+2026-05-10 10:08:13,698 INFO ocean.pipeline_worker: Finished job PJ-CA8371DAE5
+Downloading Model from https://www.modelscope.cn to directory: /Users/liuzhenyu_macbookpro/.cache/modelscope/hub/models/iic/cv_nafnet_image-denoise_sidd
+Exception in thread Thread-1 (_heartbeat_loop):
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 143, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3317, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 448, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 1272, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 717, in checkout
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+    dbapi_connection = rec.get_connection()
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 866, in get_connection
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/create.py", line 667, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 630, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/psycopg/connection.py", line 100, in connect
+    attempts = conninfo_attempts(params)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/psycopg/_conninfo_attempts.py", line 55, in conninfo_attempts
+    raise last_exc
+psycopg.OperationalError: failed to resolve host 'aws-1-ap-south-1.pooler.supabase.com': [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 143, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3317, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 448, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 1272, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 717, in checkout
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+    dbapi_connection = rec.get_connection()
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 866, in get_connection
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/create.py", line 667, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 630, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/psycopg/connection.py", line 100, in connect
+    attempts = conninfo_attempts(params)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/psycopg/_conninfo_attempts.py", line 55, in conninfo_attempts
+    raise last_exc
+psycopg.OperationalError: failed to resolve host 'aws-1-ap-south-1.pooler.supabase.com': [Errno 8] nodename nor servname provided, or not known
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/threading.py", line 1043, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+
+The above exception was the direct cause of the following exception:
+
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/threading.py", line 994, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/scripts/run_pipeline_worker.py", line 69, in _heartbeat_loop
+    pipeline_worker_service.heartbeat(state.snapshot())
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/app/services/pipeline_workers.py", line 27, in heartbeat
+    self._prune_stale_workers(session, now=now)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/app/services/pipeline_workers.py", line 168, in _prune_stale_workers
+    session.execute(
+    ~~~~~~~~~~~~~~~^
+        delete(PipelineWorkerRecord).where(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            PipelineWorkerRecord.heartbeat_at < cutoff
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/scripts/run_pipeline_worker.py", line 161, in <module>
+    main()
+    ~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/scripts/run_pipeline_worker.py", line 125, in main
+    expired_jobs = pipeline_job_service.fail_expired_running_jobs()
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2239, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2108, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _connection_for_bind
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 1187, in _connection_for_bind
+    conn = bind.connect()
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3293, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 145, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2448, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 143, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/app/services/pipeline_jobs.py", line 157, in fail_expired_running_jobs
+    session.scalars(
+    ~~~~~~~~~~~~~~~^
+        select(PipelineJobRecord).where(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        )
+        ^
+    )
+    ^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3317, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 448, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 1272, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 717, in checkout
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+    dbapi_connection = rec.get_connection()
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 866, in get_connection
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2459, in scalars
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        **kw,
+        ^^^^^
+    ).scalars()
+    ^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2239, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2108, in _connection_for_bind
+    return trans._connection_for_bind(engine, execution_options)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/create.py", line 667, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 630, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/psycopg/connection.py", line 100, in connect
+    attempts = conninfo_attempts(params)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/psycopg/_conninfo_attempts.py", line 55, in conninfo_attempts
+    raise last_exc
+  File "<string>", line 2, in _connection_for_bind
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 1187, in _connection_for_bind
+    conn = bind.connect()
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3293, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) failed to resolve host 'aws-1-ap-south-1.pooler.supabase.com': [Errno 8] nodename nor servname provided, or not known
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 145, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2448, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 143, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 3317, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 448, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 1272, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 717, in checkout
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+    dbapi_connection = rec.get_connection()
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 866, in get_connection
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/create.py", line 667, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 630, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/psycopg/connection.py", line 100, in connect
+    attempts = conninfo_attempts(params)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/psycopg/_conninfo_attempts.py", line 55, in conninfo_attempts
+    raise last_exc
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) failed to resolve host 'aws-1-ap-south-1.pooler.supabase.com': [Errno 8] nodename nor servname provided, or not known
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-05-10 13:25:39,551 INFO ocean.pipeline_worker: Pipeline worker started. once=False max_jobs=0 poll_seconds=2
+2026-05-10 13:44:46,879 INFO ocean.pipeline_worker: Claimed job PJ-E54B76FB70
+2026-05-10 13:44:51,494 - modelscope - INFO - initiate model from /Users/liuzhenyu_macbookpro/.cache/modelscope/hub/models/iic/cv_nafnet_image-denoise_sidd
+2026-05-10 13:44:51,494 - modelscope - INFO - initiate model from location /Users/liuzhenyu_macbookpro/.cache/modelscope/hub/models/iic/cv_nafnet_image-denoise_sidd.
+2026-05-10 13:44:51,495 - modelscope - INFO - initialize model from /Users/liuzhenyu_macbookpro/.cache/modelscope/hub/models/iic/cv_nafnet_image-denoise_sidd
+2026-05-10 13:44:51,709 - modelscope - INFO - Loading NAFNet model from /Users/liuzhenyu_macbookpro/.cache/modelscope/hub/models/iic/cv_nafnet_image-denoise_sidd/pytorch_model.pt, with param key: [params].
+2026-05-10 13:44:51,763 - modelscope - INFO - load model done.
+2026-05-10 13:44:51,774 - modelscope - INFO - cuda is not available, using cpu instead.
+2026-05-10 13:44:51,775 - modelscope - INFO - load image denoise model done
+2026-05-10 13:45:20,659 WARNING services.api.app.services.semantic: Semantic request timed out on attempt 1/1, fallback to rules.
+2026-05-10 13:45:20,659 ERROR services.api.app.services.semantic: Semantic LLM analysis failed, fallback to rules.
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+        pool_request.request
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+        self.READ_NUM_BYTES, timeout=timeout
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_backends/sync.py", line 126, in read
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadTimeout: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1019, in request
+    response = self._send_request(
+        request,
+        stream=stream or self._should_stream_response_body(request=request),
+        **kwargs,
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_client.py", line 400, in _send_request
+    return self._send_with_auth_retry(request, stream=stream, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_client.py", line 378, in _send_with_auth_retry
+    response = super()._send_request(request, stream=stream, **kwargs)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 947, in _send_request
+    return self._client.send(request, stream=stream, **kwargs)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadTimeout: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/app/services/semantic.py", line 144, in _analyze_with_llm
+    raise last_error
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/services/api/app/services/semantic.py", line 96, in _analyze_with_llm
+    completion = self._get_client().chat.completions.create(
+        model=settings.modelscope_llm_model,
+        temperature=0.1,
+        messages=messages,
+    )
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_utils/_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/resources/chat/completions/completions.py", line 1211, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1314, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1037, in request
+    raise APITimeoutError(request=request) from err
+openai.APITimeoutError: Request timed out.
+2026-05-10 13:45:24,917 INFO ocean.pipeline_worker: Finished job PJ-E54B76FB70

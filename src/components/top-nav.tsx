@@ -4,8 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { navItems } from "@/lib/project-data";
-import { motion } from "framer-motion";
-import { LayoutDashboard, Database, Camera, Activity } from "lucide-react";
+import { LayoutDashboard, Database, Camera, Activity, History } from "lucide-react";
 
 const statusItems = [
   "增强、检测、OCR、语义分析已联通",
@@ -16,6 +15,7 @@ const statusItems = [
 const iconMap: Record<string, React.ElementType> = {
   "/": LayoutDashboard,
   "/collect": Camera,
+  "/jobs": History,
   "/dashboard": Activity,
   "/admin/trash": Database,
 };
@@ -24,27 +24,25 @@ export function TopNav() {
   const pathname = usePathname();
 
   return (
-    <aside className="sticky top-0 h-screen w-72 flex-shrink-0 glass-panel p-6 flex flex-col gap-8 overflow-y-auto relative z-30">
-      {/* Decorative background glow */}
-      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary/8 to-transparent pointer-events-none -z-10" />
+    <aside className="sticky top-0 h-[calc(100vh-2rem)] w-[260px] flex-shrink-0 bg-card rounded-xl p-6 flex flex-col gap-8 overflow-y-auto relative z-30 border border-border shadow-sm">
 
-      <div className="flex flex-col gap-1 relative z-10">
-        <Link className="text-2xl font-extrabold tracking-tight text-gradient flex items-center gap-2" href="/">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/20">
-            <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-white" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <div className="flex flex-col gap-1 relative z-10 pt-2">
+        <Link className="text-xl font-bold tracking-tight text-foreground flex items-center gap-3 group" href="/">
+          <div className="w-8 h-8 rounded bg-primary/10 flex items-center justify-center border border-primary/30 text-primary">
+            <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2 12h4l3-9 5 18 3-9h5" />
             </svg>
           </div>
-          Ocean
+          <span>Ocean</span>
         </Link>
-        <p className="text-xs text-muted-foreground font-medium mt-1">水下垃圾识别与数据管理平台</p>
+        <p className="text-[11px] text-muted-foreground font-medium mt-2">水下垃圾识别系统</p>
       </div>
 
-      <div className="flex flex-col gap-3 mt-4 relative z-10">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70 px-4">
-          工作区
+      <div className="flex flex-col gap-4 mt-6 relative z-10">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2">
+          Workspace
         </span>
-        <nav className="flex flex-col gap-1.5" aria-label="Primary">
+        <nav className="flex flex-col gap-1" aria-label="Primary">
           {navItems.map((item) => {
             const active = pathname === item.href;
             const Icon = iconMap[item.href] || LayoutDashboard;
@@ -53,36 +51,21 @@ export function TopNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative group px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-3 overflow-hidden"
+                className={cn(
+                  "relative group px-3 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center gap-3 overflow-hidden",
+                  active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                )}
               >
-                {active && (
-                  <motion.div
-                    layoutId="active-nav-bg"
-                    className="absolute inset-0 bg-white/10 shadow-sm border border-white/15 rounded-xl -z-10"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-                {!active && (
-                  <div className="absolute inset-0 bg-white/6 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl -z-10" />
-                )}
-
                 <Icon className={cn(
-                  "w-4 h-4 transition-colors duration-300",
-                  active ? "text-primary" : "text-muted-foreground group-hover:text-primary"
+                  "w-4 h-4",
+                  active ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
                 )} />
-                <span className={cn(
-                  "relative z-10 transition-colors duration-300",
-                  active ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
-                )}>
+                <span className="relative z-10">
                   {item.label}
                 </span>
 
                 {active && (
-                  <motion.div
-                    layoutId="active-nav-indicator"
-                    className="absolute left-0 top-1/4 bottom-1/4 w-1 bg-primary rounded-r-full"
-                  />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-primary rounded-r-sm" />
                 )}
               </Link>
             );
@@ -90,29 +73,24 @@ export function TopNav() {
         </nav>
       </div>
 
-      <div className="mt-auto glass-card p-5 rounded-2xl text-sm flex flex-col gap-4 relative z-10 overflow-hidden group">
-        <div className="absolute -right-4 -top-4 w-24 h-24 bg-secondary/10 rounded-full blur-2xl group-hover:bg-secondary/20 transition-all duration-500" />
-
-        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70">
-          系统状态
-        </span>
-        <div className="flex items-center gap-2.5 font-semibold text-secondary">
-          <div className="relative flex h-3 w-3 items-center justify-center">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary/60"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+      <div className="mt-auto relative z-10 group cursor-default">
+        <div className="relative p-4 flex flex-col gap-4 bg-background border border-border rounded-lg">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+            Status
+          </span>
+          <div className="flex items-center gap-2 font-semibold text-primary text-xs">
+            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+            AI 工作流在线
           </div>
-          AI 工作流在线
+          <ul className="flex flex-col gap-2 text-[10px] text-muted-foreground">
+            {statusItems.map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="text-primary/50 mt-0.5">›</span>
+                <span className="leading-relaxed">{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="flex flex-col gap-2.5 text-xs text-muted-foreground/80 font-medium">
-          {statusItems.map((item) => (
-            <li key={item} className="flex items-start gap-2">
-              <svg className="w-3.5 h-3.5 text-secondary/50 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="leading-snug">{item}</span>
-            </li>
-          ))}
-        </ul>
       </div>
     </aside>
   );

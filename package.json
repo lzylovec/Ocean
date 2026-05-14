@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "clean": "rm -rf .next"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

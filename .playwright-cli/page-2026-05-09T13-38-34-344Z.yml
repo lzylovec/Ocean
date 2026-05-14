@@ -1,0 +1,118 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - link "Ocean" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: Ocean
+        - paragraph [ref=e10]: 水下垃圾识别系统
+      - generic [ref=e11]:
+        - generic [ref=e12]: Workspace
+        - navigation "Primary" [ref=e13]:
+          - link "项目首页" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - img [ref=e15]
+            - generic [ref=e20]: 项目首页
+          - link "采集页" [ref=e21] [cursor=pointer]:
+            - /url: /collect
+            - img [ref=e22]
+            - generic [ref=e25]: 采集页
+          - link "任务历史" [ref=e26] [cursor=pointer]:
+            - /url: /jobs
+            - img [ref=e27]
+            - generic [ref=e31]: 任务历史
+          - link "数据看板" [ref=e32] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e33]
+            - generic [ref=e35]: 数据看板
+          - link "后台核对" [ref=e36] [cursor=pointer]:
+            - /url: /admin/trash
+            - img [ref=e37]
+            - generic [ref=e41]: 后台核对
+      - generic [ref=e44]:
+        - generic [ref=e45]: Status
+        - generic [ref=e46]: AI 工作流在线
+        - list [ref=e48]:
+          - listitem [ref=e49]:
+            - generic [ref=e50]: ›
+            - generic [ref=e51]: 增强、检测、OCR、语义分析已联通
+          - listitem [ref=e52]:
+            - generic [ref=e53]: ›
+            - generic [ref=e54]: 垃圾身份证支持数据库持久化
+          - listitem [ref=e55]:
+            - generic [ref=e56]: ›
+            - generic [ref=e57]: 后台页支持记录核对与状态更新
+    - generic [ref=e58]:
+      - banner [ref=e59]:
+        - heading "治理工作台 面向采集、分析、核对与治理闭环" [level=1] [ref=e61]:
+          - text: 治理工作台
+          - generic [ref=e63]: 面向采集、分析、核对与治理闭环
+        - generic [ref=e64]:
+          - button "切换主题" [disabled]:
+            - img
+          - generic [ref=e65]:
+            - generic [ref=e66]: 本地开发环境
+            - generic [ref=e67]: 数据库已接通
+      - main [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e72]:
+            - generic [ref=e73]:
+              - paragraph [ref=e74]:
+                - img [ref=e75]
+                - text: Review Workspace
+              - heading "垃圾身份证后台核对" [level=1] [ref=e79]
+              - paragraph [ref=e80]: 这一页围绕“记录列表 + 单条详情”组织，适合实际业务复核。
+            - button "回迁历史图片到对象存储" [ref=e81] [cursor=pointer]:
+              - img
+              - text: 回迁历史图片到对象存储
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - generic [ref=e85]:
+                - generic [ref=e86]: 待复核
+                - img [ref=e88]
+              - strong [ref=e91]: "0"
+              - paragraph [ref=e92]: 需要人工确认的记录
+            - generic [ref=e93]:
+              - generic [ref=e95]:
+                - generic [ref=e96]: 待补 OCR
+                - img [ref=e98]
+              - strong [ref=e101]: "0"
+              - paragraph [ref=e102]: 文字线索不足的记录
+            - generic [ref=e103]:
+              - generic [ref=e105]:
+                - generic [ref=e106]: 已确认
+                - img [ref=e108]
+              - strong [ref=e111]: "0"
+              - paragraph [ref=e112]: 已完成业务闭环确认
+          - generic [ref=e113]:
+            - textbox "搜索 ID、潜点、类别、备注..." [ref=e114]
+            - textbox "潜点" [ref=e115]
+            - textbox "类别" [ref=e116]
+            - combobox [ref=e117]:
+              - option "全部状态" [selected]
+              - option "待复核"
+              - option "待补OCR"
+              - option "已确认"
+            - combobox [ref=e118]:
+              - option "全部风险" [selected]
+              - option "低风险"
+              - option "中风险"
+              - option "高风险"
+            - button "重置" [ref=e119] [cursor=pointer]
+          - generic [ref=e120]:
+            - generic [ref=e121]:
+              - generic [ref=e122]:
+                - paragraph [ref=e123]: Identity Queue
+                - generic [ref=e124]: 记录队列
+              - generic [ref=e126]:
+                - img [ref=e127]
+                - generic [ref=e129]: 正在加载记录...
+            - generic [ref=e130]:
+              - generic [ref=e132]:
+                - paragraph [ref=e133]: Identity Detail
+                - generic [ref=e134]: 暂无记录
+              - generic [ref=e139]: 请在左侧选择一条记录进行复核
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e145] [cursor=pointer]:
+    - img [ref=e146]

@@ -1,0 +1,60 @@
+[    6168ms] [LOG] Supabase Studio is running commit 89e291adecd87fb3802a4cca4dbbdf2bdd78cf19 deployed at 2026-05-04 14:36:05 +08:00. @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[    8058ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[    8067ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[    8311ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/platform/projects-resource-warnings?ref=qfzhdrzfzlukfbyubwov:0
+[    8316ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/platform/projects/qfzhdrzfzlukfbyubwov/billing/addons:0
+[    8317ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/platform/projects/qfzhdrzfzlukfbyubwov/settings:0
+[    8531ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/platform/projects/qfzhdrzfzlukfbyubwov:0
+[    8532ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/v1/projects/qfzhdrzfzlukfbyubwov/network-restrictions:0
+[    8533ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/platform/projects/qfzhdrzfzlukfbyubwov/config/supavisor:0
+[    8533ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/platform/projects/qfzhdrzfzlukfbyubwov/config/pgbouncer:0
+[    8551ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/v1/projects/qfzhdrzfzlukfbyubwov/ssl-enforcement:0
+[    8796ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/v1/projects/qfzhdrzfzlukfbyubwov/network-bans/retrieve:0
+[    8797ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://api.supabase.com/platform/projects/qfzhdrzfzlukfbyubwov:0
+[   10733ms] [ERROR] Failed to initialize Usercentrics: TypeError: Failed to fetch (aggregator.service.usercentrics.eu)
+    at https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:13:1799
+    at https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:46072
+    at Object.next (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:14005)
+    at https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12965
+    at new Promise (<anonymous>)
+    at M (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12714)
+    at tU (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:45818)
+    at https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:45654
+    at Object.next (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:14005)
+    at https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12965
+    at new Promise (<anonymous>)
+    at M (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12714)
+    at tP (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:45585)
+    at e.<anonymous> (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:61344)
+    at Object.next (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:14005)
+    at https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12965
+    at new Promise (<anonymous>)
+    at M (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12714)
+    at e.fetchAggregatedServices (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:61182)
+    at t.<anonymous> (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:116199)
+    at Object.next (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:14005)
+    at https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12965
+    at new Promise (<anonymous>)
+    at M (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12714)
+    at t.fetchServices (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:115999)
+    at t.<anonymous> (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:109329)
+    at Object.next (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:14005)
+    at https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12965
+    at new Promise (<anonymous>)
+    at M (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12714)
+    at t.extendServices (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:109181)
+    at e.<anonymous> (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:265157)
+    at Object.next (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:14005)
+    at o (https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0~4sz39c_mg-o.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:2:12770) @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   15384ms] [ERROR] Connecting to 'https://analytics.google.com/g/collect?a=adblocker_check' violates the following Content Security Policy directive: "default-src 'self' https://api.supabase.com http://localhost:8000 https://auth.supabase.io https://otqhrpbxhxkrhrnjqbba.supabase.co ws://localhost:8000 wss://localhost:8000 https://*.supabase.co https://*.storage.supabase.co wss://*.supabase.co https://*.hcaptcha.com https://cdn-global.configcat.com https://configcat.supabase.com https://*.stripe.com https://*.stripe.network https://www.cloudflare.com https://*.vercel-insights.com https://api.github.com https://raw.githubusercontent.com https://frontend-assets.supabase.com https://*.usercentrics.eu https://ss.supabase.com https://maps.googleapis.com https://ph.supabase.com https://cdnjs.cloudflare.com wss://*.pusher.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://*.ingest.de.sentry.io". Note that 'connect-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked. @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   15385ms] [ERROR] Fetch API cannot load https://analytics.google.com/g/collect?a=adblocker_check. Refused to connect because it violates the document's Content Security Policy. @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   64488ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   64543ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   64616ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   64620ms] [LOG] Supabase Studio is running commit 89e291adecd87fb3802a4cca4dbbdf2bdd78cf19 deployed at 2026-05-04 14:36:05 +08:00. @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   64624ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   65417ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   65454ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   65530ms] [WARNING] [Warning] Please install/enable Redux devtools extension @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   66674ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12
+[   66844ms] [ERROR] Flag key "headerUpgradeCta" does not exist in PostHog flag store @ https://frontend-assets.supabase.com/studio/89e291adecd8/_next/static/chunks/0awe-cgxr6t0e.js?dpl=dpl_BcwLyW5gdEP9f6BmxPVcmPsH4zmf:12

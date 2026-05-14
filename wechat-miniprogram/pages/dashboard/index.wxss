@@ -1,0 +1,96 @@
+.bar-row + .bar-row {
+  margin-top: 18rpx;
+}
+
+.bar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+
+.bar-label {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #234b67;
+}
+
+.bar-value {
+  font-size: 24rpx;
+  color: #5f7489;
+}
+
+.bar-track {
+  width: 100%;
+  height: 18rpx;
+  border-radius: 999rpx;
+  overflow: hidden;
+  background: rgba(214, 228, 242, 0.72);
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999rpx;
+}
+
+.bar-fill-primary {
+  background: linear-gradient(90deg, #0b75d9 0%, #28a4e3 100%);
+}
+
+.bar-fill-warning {
+  background: linear-gradient(90deg, #f59e0b 0%, #f8c14c 100%);
+}
+
+.bar-fill-success {
+  background: linear-gradient(90deg, #169678 0%, #39b992 100%);
+}
+
+.site-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid rgba(148, 163, 184, 0.14);
+}
+
+.site-row:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.site-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #143a53;
+}
+
+.site-desc {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #698097;
+}
+
+.site-risk {
+  padding: 10rpx 16rpx;
+  border-radius: 999rpx;
+  background: rgba(15, 108, 207, 0.08);
+  color: #0f6ccf;
+  font-size: 22rpx;
+}
+
+.stack-list {
+  margin-top: 18rpx;
+}
+
+.stack-item {
+  padding: 18rpx 22rpx;
+  border-radius: 22rpx;
+  background: rgba(244, 250, 255, 0.96);
+  border: 1rpx solid rgba(15, 108, 207, 0.08);
+  color: #335675;
+  font-size: 24rpx;
+}
+
+.stack-item + .stack-item {
+  margin-top: 12rpx;
+}

@@ -1,0 +1,87 @@
+<h2>D 海雾玻璃：实现路径选择</h2>
+<p class="subtitle">目标：全站统一背景 + 微动沉浸，但依然“惊艳”。请选择你更接受的实现方式。</p>
+
+<style>
+  .tagrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .tag{font-size:12px;letter-spacing:.2px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:rgba(255,255,255,.86)}
+
+  .mini{
+    height:140px;border-radius:14px;overflow:hidden;
+    position:relative;border:1px solid rgba(255,255,255,.12);
+    background:radial-gradient(900px 480px at 30% 25%,rgba(148,163,184,.16),rgba(0,0,0,0)),
+               radial-gradient(900px 480px at 70% 30%,rgba(56,189,248,.12),rgba(0,0,0,0)),
+               linear-gradient(135deg,#0b1220,#070b12);
+  }
+  .mini:before,.mini:after{content:"";position:absolute;inset:-30% -20% -40% -20%;border-radius:40%}
+  .mini:before{background:radial-gradient(circle at 42% 35%,rgba(255,255,255,.18),rgba(255,255,255,0) 60%);mix-blend-mode:screen;animation:driftA 10s ease-in-out infinite}
+  .mini:after{background:radial-gradient(circle at 60% 45%,rgba(56,189,248,.22),rgba(56,189,248,0) 62%);mix-blend-mode:screen;animation:driftB 13s ease-in-out infinite}
+  .scan{position:absolute;left:-40%;top:36%;width:180%;height:2px;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(255,255,255,.22),rgba(0,0,0,0));transform:rotate(-8deg);opacity:.65;animation:scan 7.2s ease-in-out infinite}
+  .foam{position:absolute;inset:0;opacity:.6;background:
+    radial-gradient(2px 2px at 18% 28%,rgba(255,255,255,.50),rgba(255,255,255,0) 55%),
+    radial-gradient(2px 2px at 34% 52%,rgba(255,255,255,.38),rgba(255,255,255,0) 55%),
+    radial-gradient(2px 2px at 62% 40%,rgba(255,255,255,.44),rgba(255,255,255,0) 55%),
+    radial-gradient(2px 2px at 84% 62%,rgba(255,255,255,.35),rgba(255,255,255,0) 55%);
+    animation:spark 7s linear infinite;
+  }
+  @keyframes driftA{0%{transform:translate(-6%,-2%) rotate(0deg)}50%{transform:translate(6%,2%) rotate(18deg)}100%{transform:translate(-6%,-2%) rotate(0deg)}}
+  @keyframes driftB{0%{transform:translate(5%,-3%) rotate(0deg)}50%{transform:translate(-5%,3%) rotate(-14deg)}100%{transform:translate(5%,-3%) rotate(0deg)}}
+  @keyframes spark{0%{opacity:.22}50%{opacity:.78}100%{opacity:.22}}
+  @keyframes scan{0%{transform:translateX(-12%) rotate(-8deg);opacity:.12}45%{opacity:.68}100%{transform:translateX(12%) rotate(-8deg);opacity:.10}}
+
+  .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .card-body{padding-top:10px}
+  .card-body h3{margin:0 0 6px 0}
+  .card-body p{margin:0;color:rgba(255,255,255,.75);font-size:13px;line-height:1.35}
+</style>
+
+<div class="cards">
+  <div class="card" data-choice="css" onclick="toggleSelect(this)">
+    <div class="card-image mini">
+      <div class="scan"></div>
+      <div class="foam"></div>
+    </div>
+    <div class="card-body">
+      <h3>A 纯 CSS / Framer Motion</h3>
+      <p>实现快、依赖少、可控强；惊艳靠“层次+质感+交互”，极限效果不如 Canvas/WebGL。</p>
+      <div class="tagrow">
+        <span class="tag">性能友好</span>
+        <span class="tag">可维护</span>
+        <span class="tag">适合全站</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="canvas" onclick="toggleSelect(this)">
+    <div class="card-image mini">
+      <div class="scan"></div>
+    </div>
+    <div class="card-body">
+      <h3>B Canvas 2D 海流粒子</h3>
+      <p>用粒子/流场制造“海流”，仍可轻量；需要做降级、适配与层叠策略。</p>
+      <div class="tagrow">
+        <span class="tag">更灵动</span>
+        <span class="tag">可控</span>
+        <span class="tag">需降级</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="webgl" onclick="toggleSelect(this)">
+    <div class="card-image mini">
+      <div class="foam"></div>
+    </div>
+    <div class="card-body">
+      <h3>C WebGL 着色器海面</h3>
+      <p>最“惊艳”的真实折射/焦散；但引入新依赖与兼容成本，移动端/低端机需强降级。</p>
+      <div class="tagrow">
+        <span class="tag">视觉上限最高</span>
+        <span class="tag">成本更高</span>
+        <span class="tag">强降级</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="subtitle">请在页面里点选 A/B/C 之一。默认我会推荐 A 或 B（更适合全站）。</p>
+</div>

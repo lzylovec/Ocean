@@ -1,0 +1,6 @@
+{"type":"server-started","port":57129,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:57129","screen_dir":"/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.superpowers/brainstorm/43201-1776062785/content","state_dir":"/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.superpowers/brainstorm/43201-1776062785/state"}
+{"type":"screen-added","file":"/Users/liuzhenyu_macbookpro/Desktop/Project/Ocean/.superpowers/brainstorm/43201-1776062785/content/visual-style.html"}
+{"type":"server-stopped","reason":"owner process exited"}
+{"source":"user-event","type":"click","text":"D 海雾玻璃（Ocean Glass）\n        玻璃拟态、微反射、克制的动感；适合“产品化/克制高级”","choice":"glass","id":null,"timestamp":1776062851249}
+{"source":"user-event","type":"click","text":"D 海雾玻璃（Ocean Glass）\n        玻璃拟态、微反射、克制的动感；适合“产品化/克制高级”","choice":"glass","id":null,"timestamp":1776062852014}
+{"source":"user-event","type":"click","text":"B 生物荧光（Bioluminescent）\n        霓虹点亮暗海，强对比与光晕；适合“惊艳/未来/赛博海洋”","choice":"biolum","id":null,"timestamp":1776062853680}

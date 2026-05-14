@@ -1,0 +1,114 @@
+<view class="page-shell">
+  <view class="hero-card">
+    <view class="hero-kicker">Identity Review</view>
+    <view class="hero-title">记录 {{identity ? identity.shortIdentityId : '--'}}</view>
+    <view class="hero-subtitle">
+      在移动端查看原图、增强图、OCR 线索和语义摘要，并直接更新审核状态。
+    </view>
+    <view class="hero-status {{identity ? identity.reviewMeta.className : 'status-pill status-neutral'}}">
+      <text>{{identity ? identity.reviewMeta.label : '加载中'}}</text>
+    </view>
+  </view>
+
+  <view class="panel panel-compact" wx:if="{{errorMessage}}">
+    <view class="section-kicker">Request Error</view>
+    <view class="section-desc">{{errorMessage}}</view>
+  </view>
+
+  <view class="panel" wx:if="{{identity}}">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Identity Overview</view>
+        <view class="section-title">{{identity.recognizedCategory}}</view>
+        <view class="section-desc">{{identity.professionalCategory}} · {{identity.siteName}}</view>
+      </view>
+      <view class="{{identity.riskMeta.className}}">{{identity.riskMeta.label}}</view>
+    </view>
+
+    <view class="meta-row">
+      <view class="meta-tag badge badge-neutral">ID {{identity.shortIdentityId}}</view>
+      <view class="meta-tag badge badge-primary">{{identity.sourceHint}}</view>
+      <view class="meta-tag badge badge-neutral">{{identity.materialHint}}</view>
+    </view>
+
+    <view class="thumb-row">
+      <view class="thumb-item">
+        <view class="thumb-card" bindtap="previewImage" data-url="{{identity.originalImage.previewUrl}}">
+          <image
+            wx:if="{{identity.originalImage.renderUrl}}"
+            class="thumb-image"
+            src="{{identity.originalImage.renderUrl}}"
+            mode="aspectFill"
+          ></image>
+          <view class="thumb-placeholder" wx:else>
+            {{identity.originalImage.loading ? '加载原图中...' : '点击查看原图'}}
+          </view>
+        </view>
+      </view>
+      <view class="thumb-item">
+        <view class="thumb-card" bindtap="previewImage" data-url="{{identity.enhancedImage.previewUrl}}">
+          <image
+            wx:if="{{identity.enhancedImage.renderUrl}}"
+            class="thumb-image"
+            src="{{identity.enhancedImage.renderUrl}}"
+            mode="aspectFill"
+          ></image>
+          <view class="thumb-placeholder" wx:else>
+            {{identity.enhancedImage.loading ? '加载增强图中...' : '点击查看增强图'}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="note-card">主类别：{{identity.primaryCategory}}</view>
+    <view class="note-card">分类结构：{{identity.categoriesText}}</view>
+    <view class="note-card">OCR 文字：{{identity.ocrTextsText}}</view>
+    <view class="note-card">OCR 关键词：{{identity.ocrKeywordsText}}</view>
+    <view class="note-card">标签：{{identity.volunteerTagsText}}</view>
+    <view class="note-card">志愿者备注：{{identity.volunteerNote}}</view>
+    <view class="note-card">{{identity.volunteerSummary}}</view>
+  </view>
+
+  <view class="panel" wx:if="{{identity}}">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Manual Review</view>
+        <view class="section-title">审核操作</view>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="field-label">人工补充文字线索</view>
+      <textarea class="field-textarea" value="{{manualTextClueDraft}}" bindinput="onManualTextInput" placeholder="补充品牌、材质、包装信息或人工判断依据"></textarea>
+    </view>
+
+    <view class="btn-row">
+      <view class="btn-item">
+        <button class="btn btn-secondary" bindtap="saveManualText">保存文字线索</button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="updateReviewStatus" data-status="待复核">标记待复核</button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-secondary" bindtap="updateReviewStatus" data-status="待补文字线索">标记待补文字线索</button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="updateReviewStatus" data-status="已确认">标记已确认</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel" wx:if="{{identity && identity.actionSuggestions.length}}">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Action Suggestions</view>
+        <view class="section-title">治理建议</view>
+      </view>
+    </view>
+
+    <view class="suggestion-card" wx:for="{{identity.actionSuggestions}}" wx:key="text">
+      <view class="suggestion-title">{{item.text}}</view>
+      <view class="suggestion-desc">{{item.hint}}</view>
+    </view>
+  </view>
+</view>

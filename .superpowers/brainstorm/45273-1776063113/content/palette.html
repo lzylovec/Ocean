@@ -1,0 +1,123 @@
+<h2>D 海雾玻璃：配色与光感</h2>
+<p class="subtitle">你选了 A（纯 CSS/Framer）。下一步定“主色 + 光晕色”，决定惊艳程度与气质。</p>
+
+<style>
+  .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .swatch{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+  .dot{width:12px;height:12px;border-radius:999px;box-shadow:0 0 0 1px rgba(255,255,255,.18) inset,0 10px 30px rgba(0,0,0,.35)}
+  .lbl{font-size:12px;color:rgba(255,255,255,.74)}
+
+  .mini{
+    height:170px;border-radius:14px;overflow:hidden;position:relative;
+    border:1px solid rgba(255,255,255,.12);
+    background:linear-gradient(135deg,#0b1220,#070b12);
+  }
+  .mini .fog{position:absolute;inset:-30% -20% -40% -20%;border-radius:40%}
+  .mini .fog:before,.mini .fog:after{content:"";position:absolute;inset:0;border-radius:40%}
+  .mini .fog:before{mix-blend-mode:screen;animation:driftA 10s ease-in-out infinite}
+  .mini .fog:after{mix-blend-mode:screen;animation:driftB 13s ease-in-out infinite}
+  .mini .scan{position:absolute;left:-40%;top:44%;width:180%;height:2px;transform:rotate(-8deg);opacity:.55;animation:scan 7.6s ease-in-out infinite}
+  .mini .glass{
+    position:absolute;left:14px;right:14px;bottom:14px;height:64px;border-radius:14px;
+    background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.08));
+    border:1px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(10px);
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+  }
+  .mini .btn{
+    position:absolute;right:26px;bottom:30px;height:34px;padding:0 14px;border-radius:999px;
+    display:inline-flex;align-items:center;gap:8px;font-size:12px;
+    color:rgba(255,255,255,.92);
+    box-shadow:0 14px 40px rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.12);
+  }
+  .mini .btn .pill{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.88)}
+  .mini .txt{
+    position:absolute;left:26px;bottom:32px;font-size:12px;color:rgba(255,255,255,.70)
+  }
+
+  .v-cyan .fog:before{background:radial-gradient(circle at 42% 35%,rgba(255,255,255,.14),rgba(255,255,255,0) 62%)}
+  .v-cyan .fog:after{background:radial-gradient(circle at 60% 45%,rgba(34,211,238,.22),rgba(34,211,238,0) 62%)}
+  .v-cyan .scan{background:linear-gradient(90deg,rgba(0,0,0,0),rgba(34,211,238,.28),rgba(0,0,0,0))}
+  .v-cyan .btn{background:linear-gradient(90deg,rgba(34,211,238,.26),rgba(56,189,248,.18))}
+  .v-cyan .btn .pill{background:#22d3ee}
+
+  .v-teal .fog:before{background:radial-gradient(circle at 42% 35%,rgba(255,255,255,.14),rgba(255,255,255,0) 62%)}
+  .v-teal .fog:after{background:radial-gradient(circle at 58% 46%,rgba(20,184,166,.22),rgba(20,184,166,0) 62%)}
+  .v-teal .scan{background:linear-gradient(90deg,rgba(0,0,0,0),rgba(20,184,166,.26),rgba(0,0,0,0))}
+  .v-teal .btn{background:linear-gradient(90deg,rgba(20,184,166,.24),rgba(45,212,191,.16))}
+  .v-teal .btn .pill{background:#14b8a6}
+
+  .v-aurora .fog:before{background:radial-gradient(circle at 40% 34%,rgba(255,255,255,.14),rgba(255,255,255,0) 62%)}
+  .v-aurora .fog:after{background:radial-gradient(circle at 62% 44%,rgba(99,102,241,.24),rgba(99,102,241,0) 62%)}
+  .v-aurora .scan{background:linear-gradient(90deg,rgba(0,0,0,0),rgba(99,102,241,.26),rgba(0,0,0,0))}
+  .v-aurora .btn{background:linear-gradient(90deg,rgba(99,102,241,.22),rgba(56,189,248,.14))}
+  .v-aurora .btn .pill{background:#6366f1}
+
+  @keyframes driftA{0%{transform:translate(-6%,-2%) rotate(0deg)}50%{transform:translate(6%,2%) rotate(18deg)}100%{transform:translate(-6%,-2%) rotate(0deg)}}
+  @keyframes driftB{0%{transform:translate(5%,-3%) rotate(0deg)}50%{transform:translate(-5%,3%) rotate(-14deg)}100%{transform:translate(5%,-3%) rotate(0deg)}}
+  @keyframes scan{0%{transform:translateX(-12%) rotate(-8deg);opacity:.10}45%{opacity:.60}100%{transform:translateX(12%) rotate(-8deg);opacity:.08}}
+</style>
+
+<div class="cards">
+  <div class="card" data-choice="cyan" onclick="toggleSelect(this)">
+    <div class="card-image mini v-cyan">
+      <div class="fog"></div>
+      <div class="scan"></div>
+      <div class="glass"></div>
+      <div class="txt">Arctic Cyan</div>
+      <div class="btn"><span class="pill"></span> 主按钮</div>
+    </div>
+    <div class="card-body">
+      <h3>A 冰蓝青（推荐）</h3>
+      <p>更“海雾/玻璃/专业”，惊艳靠细节与层次，不会显得花。</p>
+      <div class="swatch">
+        <span class="dot" style="background:#22d3ee"></span><span class="lbl">#22d3ee</span>
+        <span class="dot" style="background:#38bdf8"></span><span class="lbl">#38bdf8</span>
+        <span class="dot" style="background:#94a3b8"></span><span class="lbl">#94a3b8</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="teal" onclick="toggleSelect(this)">
+    <div class="card-image mini v-teal">
+      <div class="fog"></div>
+      <div class="scan"></div>
+      <div class="glass"></div>
+      <div class="txt">Deep Teal</div>
+      <div class="btn"><span class="pill"></span> 主按钮</div>
+    </div>
+    <div class="card-body">
+      <h3>B 深海绿（自然）</h3>
+      <p>更“海洋生态/环保”，比冰蓝更温和，适合公益感。</p>
+      <div class="swatch">
+        <span class="dot" style="background:#14b8a6"></span><span class="lbl">#14b8a6</span>
+        <span class="dot" style="background:#2dd4bf"></span><span class="lbl">#2dd4bf</span>
+        <span class="dot" style="background:#a7f3d0"></span><span class="lbl">#a7f3d0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="aurora" onclick="toggleSelect(this)">
+    <div class="card-image mini v-aurora">
+      <div class="fog"></div>
+      <div class="scan"></div>
+      <div class="glass"></div>
+      <div class="txt">Violet Aurora</div>
+      <div class="btn"><span class="pill"></span> 主按钮</div>
+    </div>
+    <div class="card-body">
+      <h3>C 极光紫（更未来）</h3>
+      <p>更“未来/高科技”，惊艳更强，但更偏赛博而非自然海。</p>
+      <div class="swatch">
+        <span class="dot" style="background:#6366f1"></span><span class="lbl">#6366f1</span>
+        <span class="dot" style="background:#38bdf8"></span><span class="lbl">#38bdf8</span>
+        <span class="dot" style="background:#0ea5e9"></span><span class="lbl">#0ea5e9</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="subtitle">请点选 A/B/C 其一，然后回到终端告诉我你选了哪个。</p>
+</div>

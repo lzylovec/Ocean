@@ -1,0 +1,228 @@
+<view class="page-shell">
+  <view class="hero-card">
+    <view class="hero-kicker">Field Upload</view>
+    <view class="hero-title">现场采集与识别任务</view>
+    <view class="hero-subtitle">
+      直接调用手机摄像头拍照，或从相册补充水下图片，再把结果送入同一条 FastAPI AI 流水线持续轮询。
+    </view>
+    <view class="hero-status {{workerMeta.className}}">
+      <text>{{workerMeta.label}}</text>
+    </view>
+    <view class="hero-status-detail">{{workerMeta.detail}}</view>
+  </view>
+
+  <view class="panel panel-compact" wx:if="{{workerStatus === 'offline' || workerStatus === 'degraded'}}">
+    <view class="section-kicker">Worker Notice</view>
+    <view class="section-desc">
+      当前 worker 不在线或状态异常。现在提交的任务会先进入队列，但不会继续推进，请先启动 `run_pipeline_worker.py`。
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Collect Form</view>
+        <view class="section-title">上传与备注</view>
+      </view>
+    </view>
+
+    <view class="picker-box">
+      <view wx:if="{{cameraVisible}}">
+        <camera class="camera-surface" device-position="{{cameraPosition}}" flash="off" binderror="onCameraError"></camera>
+        <view class="picker-file-name">相机已开启</view>
+        <view class="picker-hint">建议使用后置镜头对准待识别垃圾主体，保持目标完整进入画面。</view>
+        <view class="btn-row camera-btn-row">
+          <view class="btn-item">
+            <button class="btn btn-primary" bindtap="takePhoto" loading="{{takingPhoto}}" disabled="{{takingPhoto}}">
+              {{takingPhoto ? '拍摄中...' : '拍照采集'}}
+            </button>
+          </view>
+          <view class="btn-item">
+            <button class="btn btn-secondary" bindtap="switchCameraPosition">切换镜头</button>
+          </view>
+          <view class="btn-item">
+            <button class="btn btn-secondary" bindtap="closeCameraCapture">关闭相机</button>
+          </view>
+        </view>
+      </view>
+      <view class="picker-empty" wx:elif="{{!selectedFilePath}}">
+        还没有采集图片
+        <view class="picker-hint">支持直接拍照采集，也支持从相册补充 JPG / PNG / WebP 图片，单张不超过 10 MB</view>
+      </view>
+      <view wx:else>
+        <image class="selected-image" src="{{selectedFilePath}}" mode="aspectFill" bindtap="previewSelectedImage"></image>
+        <view class="picker-file-name">{{selectedFileName}}</view>
+        <view class="picker-hint">{{selectedFileSizeText}} · {{selectedFileSourceLabel}}</view>
+      </view>
+    </view>
+
+    <view class="btn-row" wx:if="{{!cameraVisible}}">
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="openCameraCapture">拍照采集</button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-secondary" bindtap="chooseFromAlbum">从相册选择</button>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="field-label">潜点名称</view>
+      <input class="field-input" value="{{siteName}}" bindinput="onSiteInput" placeholder="例如：深圳湾东潜点" />
+    </view>
+
+    <view class="field">
+      <view class="field-label">志愿者备注</view>
+      <textarea class="field-textarea" value="{{volunteerNote}}" bindinput="onNoteInput" placeholder="例如：能见度较差，主体像塑料瓶，附近疑似有包装碎片。" maxlength="500"></textarea>
+    </view>
+
+    <view class="btn-row">
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="submitTask" loading="{{submitting}}" disabled="{{submitting}}">
+          {{submitting ? '提交中...' : '提交任务'}}
+        </button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-secondary" bindtap="openCameraCapture">重新拍照</button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-secondary" bindtap="chooseFromAlbum">改用相册</button>
+      </view>
+    </view>
+
+    <view class="progress-block" wx:if="{{progress > 0}}">
+      <view class="progress-head">
+        <view class="progress-label">任务进度</view>
+        <view class="progress-value">{{progress}}%</view>
+      </view>
+      <progress percent="{{progress}}" stroke-width="8" activeColor="#0b75d9" backgroundColor="#dbe8f5"></progress>
+    </view>
+
+    <view class="module-list">
+      <view class="module-item" wx:for="{{pipelineModules}}" wx:key="*this">
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <view class="panel" wx:if="{{activeJob}}">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Current Job</view>
+        <view class="section-title">当前任务</view>
+      </view>
+      <view class="{{activeJob.statusMeta.className}}">{{activeJob.statusMeta.label}}</view>
+    </view>
+
+    <view class="job-meta-line">任务 ID：{{activeJob.jobId}}</view>
+    <view class="job-meta-line">当前阶段：{{activeJob.stageLabel}}</view>
+    <view class="job-meta-line">状态信息：{{activeJob.message}}</view>
+    <view class="job-meta-line" wx:if="{{activeJob.errorDetail}}">失败原因：{{activeJob.errorDetail}}</view>
+
+    <view class="progress-block">
+      <view class="progress-head">
+        <view class="progress-label">处理进度</view>
+        <view class="progress-value">{{activeJob.progress}}%</view>
+      </view>
+      <progress percent="{{activeJob.progress}}" stroke-width="8" activeColor="#1099db" backgroundColor="#dbe8f5"></progress>
+    </view>
+
+    <view class="btn-row">
+      <view class="btn-item">
+        <button class="btn btn-secondary" bindtap="openJobDetail">查看详情</button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-danger" bindtap="cancelActiveJob" disabled="{{activeJob.status !== 'queued' && activeJob.status !== 'running'}}">
+          取消任务
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel" wx:if="{{currentResult}}">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Fresh Result</view>
+        <view class="section-title">最新识别结果</view>
+      </view>
+      <view class="{{currentResult.riskMeta.className}}">{{currentResult.riskMeta.label}}</view>
+    </view>
+    <view class="item-title">{{currentResult.recognizedCategory}}</view>
+    <view class="item-subtitle">{{currentResult.professionalCategory}}</view>
+    <view class="meta-row">
+      <view class="meta-tag badge badge-neutral">ID {{currentResult.shortIdentityId}}</view>
+      <view class="meta-tag badge badge-primary">{{currentResult.sourceHint}}</view>
+    </view>
+
+    <view class="thumb-row">
+      <view class="thumb-item">
+        <view class="thumb-card" bindtap="previewResultImage" data-url="{{currentResult.originalImage.previewUrl}}">
+          <image
+            wx:if="{{currentResult.originalImage.renderUrl}}"
+            class="thumb-image"
+            src="{{currentResult.originalImage.renderUrl}}"
+            mode="aspectFill"
+          ></image>
+          <view class="thumb-placeholder" wx:else>
+            {{currentResult.originalImage.loading ? '加载原图中...' : '点击查看原图'}}
+          </view>
+        </view>
+      </view>
+      <view class="thumb-item">
+        <view class="thumb-card" bindtap="previewResultImage" data-url="{{currentResult.enhancedImage.previewUrl}}">
+          <image
+            wx:if="{{currentResult.enhancedImage.renderUrl}}"
+            class="thumb-image"
+            src="{{currentResult.enhancedImage.renderUrl}}"
+            mode="aspectFill"
+          ></image>
+          <view class="thumb-placeholder" wx:else>
+            {{currentResult.enhancedImage.loading ? '加载增强图中...' : '点击查看增强图'}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="note-card">类别结构：{{currentResult.categoriesText}}</view>
+    <view class="note-card">OCR 文字：{{currentResult.ocrTextsText}}</view>
+    <view class="note-card">关键词：{{currentResult.ocrKeywordsText}}</view>
+    <view class="note-card">标签：{{currentResult.volunteerTagsText}}</view>
+    <view class="note-card">{{currentResult.volunteerSummary}}</view>
+
+    <view class="suggestion-card" wx:for="{{currentResult.actionSuggestions}}" wx:key="text">
+      <view class="suggestion-title">{{item.text}}</view>
+      <view class="suggestion-desc">{{item.hint}}</view>
+    </view>
+
+    <view class="btn-row">
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="openResultIdentity" data-id="{{currentResult.identityId}}">进入移动复核</button>
+      </view>
+      <view class="btn-item">
+        <button class="btn btn-secondary" bindtap="openJobDetail">查看任务详情</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel" wx:elif="{{lastResult}}">
+    <view class="section-head">
+      <view>
+        <view class="section-kicker">Last Result</view>
+        <view class="section-title">上次识别结果</view>
+      </view>
+      <view class="{{lastResult.riskMeta.className}}">{{lastResult.riskMeta.label}}</view>
+    </view>
+    <view class="item-title">{{lastResult.recognizedCategory}}</view>
+    <view class="item-subtitle">{{lastResult.professionalCategory}}</view>
+    <view class="note-card">{{lastResult.volunteerSummary}}</view>
+    <view class="btn-row">
+      <view class="btn-item">
+        <button class="btn btn-primary" bindtap="openResultIdentity" data-id="{{lastResult.identityId}}">查看复核详情</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="panel panel-compact" wx:if="{{errorMessage}}">
+    <view class="section-kicker">Request Error</view>
+    <view class="section-desc">{{errorMessage}}</view>
+  </view>
+</view>

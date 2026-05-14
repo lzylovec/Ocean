@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
+from services.api.app.database_resilience import (
+    DatabaseUnavailableError,
+    raise_database_http_error,
+    run_database_read,
+)
 from services.api.app.schemas import DashboardMetric, DashboardOverviewResponse
+from services.api.app.services.trash_identity_store import trash_identity_store
 
 
 router = APIRouter(prefix="/api/v1/dashboard", tags=["dashboard"])
@@ -10,19 +16,21 @@ router = APIRouter(prefix="/api/v1/dashboard", tags=["dashboard"])
 
 @router.get("/overview", response_model=DashboardOverviewResponse)
 def get_dashboard_overview() -> DashboardOverviewResponse:
+    try:
+        overview = run_database_read(
+            trash_identity_store.dashboard_overview,
+        )
+    except DatabaseUnavailableError:
+        raise_database_http_error("治理看板数据暂时不可用，请稍后重试。")
     return DashboardOverviewResponse(
-        status="mock",
+        status=overview["status"],
         metrics=[
-            DashboardMetric(label="累计潜点", value="24", note="覆盖 6 个重点海域"),
             DashboardMetric(
-                label="识别垃圾件数", value="1,286", note="当前为模拟识别结果"
-            ),
-            DashboardMetric(label="高风险热点", value="7", note="旅游岸线与渔区叠加"),
-            DashboardMetric(label="反馈标签", value="19", note="待接入真实语义模型"),
+                label=item["label"],
+                value=item["value"],
+                note=item["note"],
+            )
+            for item in overview["metrics"]
         ],
-        topSites=[
-            {"name": "深圳湾东潜点", "risk": "高", "topCategory": "塑料瓶 / 包装袋"},
-            {"name": "外伶仃北坡", "risk": "高", "topCategory": "废弃渔网 / 绳索"},
-            {"name": "三亚礁盘区", "risk": "中", "topCategory": "金属罐 / 包装碎片"},
-        ],
+        topSites=overview["top_sites"],
     )

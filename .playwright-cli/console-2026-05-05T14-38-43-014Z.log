@@ -1,0 +1,128 @@
+[     156ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_0rd6aq~._.js:2431
+[     181ms] [LOG] [HMR] connected @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_0rd6aq~._.js:2431
+[     245ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HTTPAccessFallbackBoundary notFound={{...}} forbidden={undefined} unauthorized={undefined}>
+      <HTTPAccessFallbackErrorBoundary pathname="/" notFound={{...}} forbidden={undefined} unauthorized={undefined} ...>
+        <RedirectBoundary>
+          <RedirectErrorBoundary router={{...}}>
+            <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+              <SegmentViewNode type="page" pagePath="page.tsx">
+                <SegmentTrieNode>
+                <ClientPageRoot Component={function Home} serverProvidedParams={{...}}>
+                  <Home params={Promise} searchParams={Promise}>
+                    <div className="flex flex-...">
+                      <div>
+                        <OceanHero>
+                          <div className="relative o...">
+                            <style>
+                            <div>
+                            <div>
+                            <div className="absolute i...">
+                              <div>
+                              <div
+                                className="absolute bottom-[-10%] rounded-full border border-white/40 bg-white/10 back..."
+                                style={{
++                                 left: "92.68414311358356%"
+-                                 left: "92.6841%"
++                                 width: 19.73814191922486
+-                                 width: "19.7381px"
++                                 height: 19.73814191922486
+-                                 height: "19.7381px"
++                                 animation: "ocean-float-bubble 13.491645905640326s linear 0.9651675388613512s infinite"
++                                 --move-x: "-12.73054014891386px"
+-                                 --move-x: "-12.73054014891386px"
+-                                 animation-duration: "13.4916s"
+-                                 animation-timing-function: "linear"
+-                                 animation-delay: "0.965168s"
+-                                 animation-iteration-count: "infinite"
+-                                 animation-direction: "normal"
+-                                 animation-fill-mode: "none"
+-                                 animation-play-state: "running"
+-                                 animation-name: "ocean-float-bubble"
+-                                 animation-timeline: "auto"
+-                                 animation-range-start: "normal"
+-                                 animation-range-end: "normal"
+                                }}
+                              >
+                              <div>
+                              <div>
+                              <div>
+                              <div
+                                className="absolute bottom-[-10%] rounded-full border border-white/40 bg-white/10 back..."
+                                style={{
++                                 left: "81.05162096674121%"
+-                                 left: "81.0516%"
++                                 width: 21.69009592053044
+-                                 width: "21.6901px"
++                                 height: 21.69009592053044
+-                                 height: "21.6901px"
++                                 animation: "ocean-float-bubble 14.184335416644899s linear 2.442298801660172s infinite"
++                                 --move-x: "-5.068202435868443px"
+-                                 --move-x: "-5.068202435868443px"
+-                                 animation-duration: "14.1843s"
+-                                 animation-timing-function: "linear"
+-                                 animation-delay: "2.4423s"
+-                                 animation-iteration-count: "infinite"
+-                                 animation-direction: "normal"
+-                                 animation-fill-mode: "none"
+-                                 animation-play-state: "running"
+-                                 animation-name: "ocean-float-bubble"
+-                                 animation-timeline: "auto"
+-                                 animation-range-start: "normal"
+-                                 animation-range-end: "normal"
+                                }}
+                              >
+                              <div>
+                              <div>
+                              <div>
+                              <div>
+                              <div>
+                              <div>
+                              <div>
+                              <div>
+                              <div>
+                              <div>
+                              <div>
+                              <div
+                                className="absolute bottom-[-10%] rounded-full border border-white/40 bg-white/10 back..."
+                                style={{
++                                 left: "16.477905491583442%"
+-                                 left: "16.4779%"
++                                 width: 23.715741877067558
+-                                 width: "23.7157px"
++                                 height: 23.715741877067558
+-                                 height: "23.7157px"
++                                 animation: "ocean-float-bubble 13.0853659175973s linear 3.92279937675994s infinite"
++                                 --move-x: "-19.123194253716065px"
+-                                 --move-x: "-19.123194253716065px"
+-                                 animation-duration: "13.0854s"
+-                                 animation-timing-function: "linear"
+-                                 animation-delay: "3.9228s"
+-                                 animation-iteration-count: "infinite"
+-                                 animation-direction: "normal"
+-                                 animation-fill-mode: "none"
+-                                 animation-play-state: "running"
+-                                 animation-name: "ocean-float-bubble"
+-                                 animation-timeline: "auto"
+-                                 animation-range-start: "normal"
+-                                 animation-range-end: "normal"
+                                }}
+                              >
+                              ...
+                            ...
+                      ...
+              ...
+            ...
+ @ http://127.0.0.1:3000/_next/static/chunks/0lp9_next_dist_0rd6aq~._.js:3272

@@ -1,0 +1,85 @@
+<h2>海洋动态视觉方向</h2>
+<p class="subtitle">先选一个“主气质”，后续再细化到配色、动效与组件质感</p>
+
+<style>
+  .style-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .style-card{border-radius:18px;overflow:hidden;position:relative;min-height:260px;border:1px solid rgba(255,255,255,.12)}
+  .style-card .meta{position:absolute;inset:auto 0 0 0;padding:14px 14px 12px;background:linear-gradient(to top,rgba(0,0,0,.75),rgba(0,0,0,0));}
+  .style-card h3{margin:0 0 4px 0;font-size:18px}
+  .style-card p{margin:0;color:rgba(255,255,255,.75);font-size:13px;line-height:1.35}
+
+  .bg-abyss{background:radial-gradient(1200px 600px at 30% 20%,rgba(44,102,255,.30),rgba(0,0,0,0)),linear-gradient(135deg,#020617,#030712 55%,#000 100%)}
+  .bg-biolum{background:radial-gradient(900px 480px at 20% 20%,rgba(0,255,209,.28),rgba(0,0,0,0)),radial-gradient(900px 480px at 80% 20%,rgba(120,0,255,.28),rgba(0,0,0,0)),linear-gradient(135deg,#020617,#020617)}
+  .bg-reef{background:radial-gradient(900px 520px at 20% 25%,rgba(34,211,238,.25),rgba(0,0,0,0)),radial-gradient(900px 520px at 80% 25%,rgba(59,130,246,.18),rgba(0,0,0,0)),linear-gradient(135deg,#041b2d,#062a4d)}
+  .bg-glass{background:radial-gradient(1000px 520px at 30% 25%,rgba(148,163,184,.18),rgba(0,0,0,0)),radial-gradient(1000px 520px at 70% 30%,rgba(56,189,248,.14),rgba(0,0,0,0)),linear-gradient(135deg,#0b1220,#070b12)}
+
+  .waves{position:absolute;inset:-30% -20% -40% -20%;opacity:.95;filter:blur(0.2px)}
+  .waves:before,.waves:after{content:"";position:absolute;inset:0;border-radius:40%;transform:translate3d(0,0,0)}
+  .waves:before{background:radial-gradient(circle at 40% 35%,rgba(56,189,248,.55),rgba(56,189,248,0) 55%);mix-blend-mode:screen;animation:driftA 9s ease-in-out infinite}
+  .waves:after{background:radial-gradient(circle at 60% 45%,rgba(99,102,241,.40),rgba(99,102,241,0) 58%);mix-blend-mode:screen;animation:driftB 12s ease-in-out infinite}
+
+  .spark{position:absolute;inset:0;pointer-events:none;opacity:.75;background:
+    radial-gradient(2px 2px at 15% 25%,rgba(255,255,255,.55),rgba(255,255,255,0) 55%),
+    radial-gradient(2px 2px at 35% 45%,rgba(255,255,255,.45),rgba(255,255,255,0) 55%),
+    radial-gradient(2px 2px at 70% 35%,rgba(255,255,255,.50),rgba(255,255,255,0) 55%),
+    radial-gradient(2px 2px at 85% 60%,rgba(255,255,255,.42),rgba(255,255,255,0) 55%);
+    animation:spark 7s linear infinite;
+  }
+
+  .glowline{position:absolute;left:-40%;top:30%;width:180%;height:2px;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(255,255,255,.22),rgba(0,0,0,0));transform:rotate(-8deg);opacity:.65;animation:scan 6.5s ease-in-out infinite}
+
+  @keyframes driftA{0%{transform:translate(-6%,-2%) rotate(0deg)}50%{transform:translate(6%,2%) rotate(18deg)}100%{transform:translate(-6%,-2%) rotate(0deg)}}
+  @keyframes driftB{0%{transform:translate(5%,-3%) rotate(0deg)}50%{transform:translate(-5%,3%) rotate(-14deg)}100%{transform:translate(5%,-3%) rotate(0deg)}}
+  @keyframes spark{0%{opacity:.25;filter:blur(.2px)}50%{opacity:.85;filter:blur(.0px)}100%{opacity:.25;filter:blur(.2px)}}
+  @keyframes scan{0%{transform:translateX(-12%) rotate(-8deg);opacity:.15}45%{opacity:.7}100%{transform:translateX(12%) rotate(-8deg);opacity:.12}}
+</style>
+
+<div class="cards">
+  <div class="card" data-choice="abyss" onclick="toggleSelect(this)">
+    <div class="card-image style-card bg-abyss">
+      <div class="waves"></div>
+      <div class="spark"></div>
+      <div class="meta">
+        <h3>A 深海幽蓝（Abyss）</h3>
+        <p>低饱和、强层次、像下潜一样沉浸；适合“专业/神秘/高级”</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="biolum" onclick="toggleSelect(this)">
+    <div class="card-image style-card bg-biolum">
+      <div class="waves"></div>
+      <div class="glowline"></div>
+      <div class="meta">
+        <h3>B 生物荧光（Bioluminescent）</h3>
+        <p>霓虹点亮暗海，强对比与光晕；适合“惊艳/未来/赛博海洋”</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="reef" onclick="toggleSelect(this)">
+    <div class="card-image style-card bg-reef">
+      <div class="waves"></div>
+      <div class="spark"></div>
+      <div class="meta">
+        <h3>C 海流清透（Reef Current）</h3>
+        <p>更明亮、更有呼吸感；适合“友好/清爽/公益”</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="glass" onclick="toggleSelect(this)">
+    <div class="card-image style-card bg-glass">
+      <div class="waves"></div>
+      <div class="glowline"></div>
+      <div class="meta">
+        <h3>D 海雾玻璃（Ocean Glass）</h3>
+        <p>玻璃拟态、微反射、克制的动感；适合“产品化/克制高级”</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="subtitle">在页面里点选一个方向（会记录选择），然后在终端告诉我你最喜欢哪一个，以及想更“静谧”还是更“炸裂”。</p>
+</div>

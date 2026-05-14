@@ -1,0 +1,122 @@
+.hero-status {
+  margin-top: 22rpx;
+}
+
+.hero-status-detail {
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: rgba(246, 252, 255, 0.86);
+}
+
+.picker-box {
+  margin-top: 20rpx;
+  padding: 24rpx;
+  border-radius: 26rpx;
+  border: 1rpx dashed rgba(15, 108, 207, 0.2);
+  background: rgba(247, 252, 255, 0.88);
+}
+
+.picker-empty {
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #194668;
+}
+
+.camera-surface {
+  width: 100%;
+  height: 520rpx;
+  border-radius: 24rpx;
+  overflow: hidden;
+  background: linear-gradient(180deg, #12334c 0%, #1b5b7d 100%);
+}
+
+.picker-hint {
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #6f8297;
+}
+
+.selected-image {
+  width: 100%;
+  height: 360rpx;
+  border-radius: 24rpx;
+  background: #dbeaf8;
+}
+
+.picker-file-name {
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #194668;
+}
+
+.camera-btn-row {
+  margin-top: 20rpx;
+}
+
+.progress-block {
+  margin-top: 24rpx;
+}
+
+.progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.progress-label {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #234b67;
+}
+
+.progress-value {
+  font-size: 24rpx;
+  color: #0f6ccf;
+}
+
+.module-list {
+  margin-top: 18rpx;
+}
+
+.module-item {
+  padding: 16rpx 18rpx;
+  border-radius: 20rpx;
+  background: rgba(244, 250, 255, 0.98);
+  color: #4e6580;
+  font-size: 24rpx;
+}
+
+.module-item + .module-item {
+  margin-top: 10rpx;
+}
+
+.job-meta-line {
+  margin-top: 14rpx;
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: #5f7489;
+}
+
+.suggestion-card {
+  margin-top: 16rpx;
+  padding: 20rpx;
+  border-radius: 22rpx;
+  background: rgba(244, 250, 255, 0.96);
+  border: 1rpx solid rgba(15, 108, 207, 0.08);
+}
+
+.suggestion-title {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #153d58;
+}
+
+.suggestion-desc {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  line-height: 1.7;
+  color: #678097;
+}

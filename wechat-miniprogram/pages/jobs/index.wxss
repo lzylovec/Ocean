@@ -1,0 +1,42 @@
+.hero-status {
+  margin-top: 22rpx;
+}
+
+.hero-status-detail {
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: rgba(246, 252, 255, 0.86);
+}
+
+.job-meta-line {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: #5f7489;
+}
+
+.progress-block {
+  margin-top: 18rpx;
+}
+
+.progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.progress-label {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #234b67;
+}
+
+.progress-value {
+  font-size: 24rpx;
+  color: #0f6ccf;
+}
+
+.pager-row {
+  margin-top: 24rpx;
+}

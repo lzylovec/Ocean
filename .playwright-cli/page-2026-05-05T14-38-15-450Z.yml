@@ -1,0 +1,163 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - link "Ocean" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: Ocean
+        - paragraph [ref=e10]: 水下垃圾识别系统
+      - generic [ref=e11]:
+        - generic [ref=e12]: Workspace
+        - navigation "Primary" [ref=e13]:
+          - link "项目首页" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - img [ref=e15]
+            - generic [ref=e20]: 项目首页
+          - link "采集页" [ref=e22] [cursor=pointer]:
+            - /url: /collect
+            - img [ref=e23]
+            - generic [ref=e26]: 采集页
+          - link "任务历史" [ref=e27] [cursor=pointer]:
+            - /url: /jobs
+            - img [ref=e28]
+            - generic [ref=e32]: 任务历史
+          - link "数据看板" [ref=e33] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e34]
+            - generic [ref=e36]: 数据看板
+          - link "后台核对" [ref=e37] [cursor=pointer]:
+            - /url: /admin/trash
+            - img [ref=e38]
+            - generic [ref=e42]: 后台核对
+      - generic [ref=e44]:
+        - generic [ref=e45]: Status
+        - generic [ref=e46]: AI 工作流在线
+        - list [ref=e48]:
+          - listitem [ref=e49]:
+            - generic [ref=e50]: ›
+            - generic [ref=e51]: 增强、检测、OCR、语义分析已联通
+          - listitem [ref=e52]:
+            - generic [ref=e53]: ›
+            - generic [ref=e54]: 垃圾身份证支持数据库持久化
+          - listitem [ref=e55]:
+            - generic [ref=e56]: ›
+            - generic [ref=e57]: 后台页支持记录核对与状态更新
+    - generic [ref=e58]:
+      - banner [ref=e59]:
+        - heading "治理工作台 面向采集、分析、核对与治理闭环" [level=1] [ref=e61]:
+          - text: 治理工作台
+          - generic [ref=e63]: 面向采集、分析、核对与治理闭环
+        - generic [ref=e64]:
+          - button "切换主题" [disabled]:
+            - img
+          - generic [ref=e65]:
+            - generic [ref=e66]: 本地开发环境
+            - generic [ref=e67]: 数据库已接通
+      - main [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e72]:
+            - generic:
+              - generic:
+                - img
+                - img
+              - generic:
+                - img
+                - img
+            - generic:
+              - generic:
+                - heading "Ocean" [level=2]
+              - generic:
+                - generic: 水下垃圾识别系统
+            - generic [ref=e73]:
+              - generic [ref=e74]: Scroll to explore
+              - img [ref=e76]
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - generic [ref=e81]:
+                - img [ref=e82]
+                - generic [ref=e85]: CMD_CENTER_
+              - heading "Ocean 控制台" [level=1] [ref=e86]
+              - paragraph [ref=e87]: 当前系统已具备图片上传、增强、检测、OCR、语义分析、垃圾身份证入库与后台核对能力。
+            - generic [ref=e93]: SYSTEM_ONLINE
+          - generic [ref=e94]:
+            - paragraph [ref=e95]:
+              - img [ref=e96]
+              - text: 初始化数据...
+            - generic [ref=e99]:
+              - generic [ref=e100]:
+                - generic [ref=e101]:
+                  - generic [ref=e102]: 待复核
+                  - img [ref=e103]
+                - strong [ref=e106]: "0"
+                - paragraph [ref=e107]: 等待人工确认的记录
+              - generic [ref=e108]:
+                - generic [ref=e109]:
+                  - generic [ref=e110]: 待补 OCR
+                  - img [ref=e111]
+                - strong [ref=e114]: "0"
+                - paragraph [ref=e115]: 需要补充文字线索
+              - generic [ref=e116]:
+                - generic [ref=e117]:
+                  - generic [ref=e118]: 已确认
+                  - img [ref=e119]
+                - strong [ref=e123]: "0"
+                - paragraph [ref=e124]: 已经完成业务确认
+          - generic [ref=e125]:
+            - generic [ref=e127]:
+              - generic [ref=e128]:
+                - heading "Quick Actions" [level=2] [ref=e129]
+                - heading "业务入口" [level=3] [ref=e130]
+              - generic [ref=e131]:
+                - link "新建采集任务" [ref=e133] [cursor=pointer]:
+                  - /url: /collect
+                  - img [ref=e134]
+                  - heading "新建采集任务" [level=4] [ref=e142]
+                  - img [ref=e143]
+                - link "查看任务历史" [ref=e146] [cursor=pointer]:
+                  - /url: /jobs
+                  - img [ref=e147]
+                  - heading "查看任务历史" [level=4] [ref=e152]
+                  - img [ref=e153]
+                - link "进入后台核对" [ref=e156] [cursor=pointer]:
+                  - /url: /admin/trash
+                  - img [ref=e157]
+                  - heading "进入后台核对" [level=4] [ref=e163]
+                  - img [ref=e164]
+                - link "查看治理看板" [ref=e167] [cursor=pointer]:
+                  - /url: /dashboard
+                  - img [ref=e168]
+                  - heading "查看治理看板" [level=4] [ref=e172]
+                  - img [ref=e173]
+            - generic [ref=e176]:
+              - generic [ref=e177]:
+                - generic [ref=e178]:
+                  - heading "Review Queue" [level=2] [ref=e179]
+                  - heading "待处理记录" [level=3] [ref=e180]
+                - link "全部" [ref=e181] [cursor=pointer]:
+                  - /url: /admin/trash
+                  - text: 全部
+                  - img [ref=e182]
+              - generic [ref=e185]:
+                - img [ref=e186]
+                - generic [ref=e190]: LOADING...
+          - generic [ref=e192]:
+            - generic [ref=e193]:
+              - img [ref=e194]
+              - generic [ref=e199]:
+                - heading "模型运行栈" [level=2] [ref=e200]
+                - paragraph [ref=e201]: Stack_Status
+            - generic [ref=e202]:
+              - generic [ref=e203]:
+                - generic [ref=e205]: 增强
+                - generic [ref=e206]: NAFNet 本地推理
+              - generic [ref=e207]:
+                - generic [ref=e209]: 检测
+                - generic [ref=e210]: DAMO-YOLO ONNX 本地执行
+              - generic [ref=e211]:
+                - generic [ref=e213]: OCR
+                - generic [ref=e214]: 检测 + 识别双阶段
+              - generic [ref=e215]:
+                - generic [ref=e217]: 语义
+                - generic [ref=e218]: Qwen ModelScope 推理
+  - region "Notifications alt+T"
