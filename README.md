@@ -1,145 +1,142 @@
 # Ocean
 
-水下垃圾识别与数据管理 MVP。
+> 水下垃圾识别与数据管理 MVP  
+> From underwater image collection to AI analysis, review workflow, and governance dashboard.
 
-当前交付包含两部分：
+Ocean 是一个面向海洋环保场景的端到端演示型项目，目标是把“水下图片采集、AI 分析、垃圾身份证入库、人工复核、治理看板”串成一条可运行的业务闭环。
 
-- `Next.js` 网页端：项目首页、采集页、任务历史页、数据看板、垃圾身份证后台页。
-- `微信小程序` 移动端：首页、采集页、任务历史页、治理看板、移动复核页。
-- `FastAPI` 服务端：本地文件上传、异步 AI 流水线、NAFNet 增强、DAMO-YOLO 检测、OCR detection + recognition、志愿者反馈语义分析接入、看板与任务接口。
+它不是单纯的模型调用 Demo，而是一个带有异步任务、状态追踪、结果持久化和复核流程的最小可用系统。
 
-## 目录结构
+## What It Does
+
+- 上传水下图片，填写潜点信息和志愿者备注
+- 自动执行图像增强、目标检测、OCR 和语义分析
+- 返回异步 `jobId`，支持轮询、取消、重试和失败追踪
+- 为每条识别结果生成“垃圾身份证”并写入 SQLite
+- 在后台完成人工复核，在看板页查看真实聚合数据
+- 支持 Web 端和微信小程序端联调
+
+## Core Flow
+
+```text
+Image Upload
+  -> Enhancement
+  -> Detection
+  -> OCR
+  -> Semantic Analysis
+  -> Trash Identity Persistence
+  -> Admin Review
+  -> Dashboard Overview
+```
+
+## Why This Project
+
+水下垃圾治理的真实难点，不只是“识别出垃圾”，而是：
+
+- 原始图片质量差，直接识别不稳定
+- 通用检测模型对水下专用垃圾覆盖有限
+- AI 处理链路长，现场难以判断任务卡在哪一步
+- 结果若不结构化沉淀，就无法进入复核、统计和治理复盘
+
+Ocean 的思路是先把最小闭环跑通，让一次识别结果能够持续服务于后续治理动作。
+
+## Highlights
+
+- **Asynchronous AI pipeline**  
+  `POST /api/v1/ai/pipeline` 返回 `jobId`，独立 worker 后台消费任务，不阻塞前端交互。
+
+- **Dedupe and cache reuse**  
+  相同图片内容和相同业务输入会优先复用进行中任务，或直接命中已完成结果，减少重复推理成本。
+
+- **Fallback-first engineering**  
+  本地模型依赖缺失、推理失败或云端语义超时时，系统自动回退到规则/mock，保证业务链路不中断。
+
+- **Trash Identity as a data abstraction**  
+  把原图、增强图、检测结果、OCR、标签、风险等级、建议和审核状态统一写入“垃圾身份证”，而不是只返回一次性识别结果。
+
+- **Real dashboard aggregation**  
+  看板数据不是静态 mock，而是从真实入库记录中聚合潜点、风险和标签信息。
+
+## Tech Stack
+
+### Frontend
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn-style UI
+- TanStack Query
+
+### Backend
+
+- FastAPI
+- SQLAlchemy
+- SQLite
+
+### AI / CV
+
+- `iic/cv_nafnet_image-denoise_sidd` for enhancement
+- `CVHub520/damo_yolo_t` for detection
+- `damo/cv_resnet18_ocr-detection-db-line-level_damo` for OCR detection
+- `iic/cv_convnextTiny_ocr-recognition-general_damo` for OCR recognition
+- `Qwen/Qwen3.5-397B-A17B` for semantic analysis
+- ONNX Runtime
+- ModelScope SDK
+
+### Storage
+
+- Local file storage: `storage/uploads`, `storage/enhanced`
+- SQLite: `storage/ocean.db`
+- Optional Supabase Storage sync
+
+## Current Scope
+
+当前仓库已经包含：
+
+- Web 端：首页、采集页、任务历史页、治理看板、后台核对页
+- 微信小程序端：首页、采集页、任务历史页、治理看板、移动复核页
+- FastAPI 服务：上传、异步任务、任务历史、垃圾身份证、看板接口
+- 独立 worker：任务消费、阶段进度、超时与异常处理
+
+当前项目仍然是 **MVP / demo prototype**，不是生产级系统。以下能力尚未完整实现：
+
+- 水下垃圾专用检测模型
+- 外部消息队列 / 可恢复任务系统
+- 正式迁移体系和复杂权限控制
+- 报告导出和更完整的数据运营功能
+
+## Repository Structure
 
 ```text
 .
-├── docs/project-plan.md
-├── services/api
-├── src/app
-├── wechat-miniprogram
-├── src/components
-├── src/lib
-└── storage
+├── docs/                       # 项目计划、PPT 说明、迁移文档
+├── services/api/              # FastAPI 服务与 AI 流水线
+├── src/app/                   # Next.js 页面
+├── src/components/            # 前端组件
+├── src/lib/                   # 前端数据与工具
+├── wechat-miniprogram/        # 微信小程序端
+├── scripts/                   # 启动与辅助脚本
+└── storage/                   # 本地图片与 SQLite 数据库
 ```
 
-## 本地启动
+## Key Pages
 
-### 1. 安装前端依赖
+- `/` 项目首页
+- `/collect` 采集与上传页
+- `/jobs` 任务历史页
+- `/dashboard` 治理看板
+- `/admin/trash` 垃圾身份证后台核对页
+- `/plan` 项目计划提示页
 
-```bash
-npm install
-```
+## API Overview
 
-### 2. 安装后端依赖
+### Health and Media
 
-```bash
-python3 -m venv .venv
-.venv/bin/pip install -r services/api/requirements.txt
-```
+- `GET /api/v1/health`
+- `POST /api/v1/media/upload`
 
-如果你要启用当前已经固定好的魔搭增强模型 `iic/cv_nafnet_image-denoise_sidd`，再安装一次视觉依赖：
-
-```bash
-.venv/bin/pip install -r services/api/requirements-vision.txt
-```
-
-### 3. 配置环境变量
-
-```bash
-cp .env.local.example .env.local
-cp services/api/.env.example services/api/.env
-```
-
-当前增强模型走本地 ModelScope SDK，不依赖 key；检测模型 `CVHub520/damo_yolo_t` 走本地 ONNX Runtime；OCR 走 `damo/cv_resnet18_ocr-detection-db-line-level_damo` + `iic/cv_convnextTiny_ocr-recognition-general_damo` 两阶段本地 ModelScope SDK；志愿者文本语义分析走 ModelScope OpenAI 兼容接口。
-垃圾身份证和异步任务状态默认持久化到 `storage/ocean.db`。
-如果你希望把图片同步到 Supabase Storage，可以配置 `SUPABASE_SERVICE_ROLE_KEY`，或者改走 Supabase S3 协议（`SUPABASE_S3_ENDPOINT`、`SUPABASE_S3_ACCESS_KEY_ID`、`SUPABASE_S3_SECRET_ACCESS_KEY`）；后端会优先把上传图和增强图写入 `SUPABASE_STORAGE_BUCKET`，拿不到配置时自动回退到本地 `storage/uploads`、`storage/enhanced`。如果 `SUPABASE_STORAGE_PUBLIC=false`，图片将通过后端 `/api/v1/media/object/...` 代理返回，不依赖 public bucket。
-当前默认把语义分析云端超时收紧到 `12s`、尝试次数收紧到 `1`，超时后会快速回退到规则分析，避免任务长时间卡在 `analyzing`。
-后台核对页现在已经提供“回迁历史图片到对象存储”按钮，对应接口是 `POST /api/v1/media/migrate-storage`。
-`ONNX_EXECUTION_PROVIDER=auto` 时会优先尝试 CUDA，其次 CoreML，最后回退 CPU；也可以手动设为 `cpu`、`cuda` 或 `coreml`。
-如果安装视觉依赖时遇到平台兼容问题，系统会自动回退到 `mock-copy` 或 `mock-fallback`，业务链路仍可继续联调。
-上传接口默认只接受 `JPG/PNG/WebP`，单张不超过 `10 MB`。
-`POST /api/v1/ai/pipeline` 现在会返回异步 `jobId`，前端通过轮询任务状态获取最终垃圾身份证结果。
-重复提交同一图片内容与相同业务输入时，系统会优先复用进行中任务或直接命中已完成结果缓存，避免重复跑模型。
-
-需要注意：你列出的 GPU 加速、批量预测、视频处理、多标签格式导入导出、多任务标注等能力，主要来自这个模型仓库所属的 `X-AnyLabeling` 平台能力，不等于我们当前项目已经全部集成。现在这个项目里已经真正接入的是“单张图片检测 + 可配置执行后端”。
-
-`GET /api/v1/health` 现在除了基础存活状态，也会返回 worker 心跳、排队任务数和运行任务数，便于判断“任务在排队”还是“worker 没启动”。
-
-### 4. 启动后端
-
-```bash
-.venv/bin/uvicorn services.api.app.main:app --reload --app-dir .
-```
-
-### 5. 启动异步 worker
-
-```bash
-.venv/bin/python services/api/scripts/run_pipeline_worker.py
-```
-
-现在 AI 任务由独立 worker 消费，API 只负责入队和查询状态。
-
-### 6. 启动前端
-
-```bash
-npm run dev
-```
-
-打开 `http://localhost:3000`。
-
-### 7. 打开微信小程序端
-
-用微信开发者工具导入 `wechat-miniprogram` 目录即可。小程序现在会按运行环境自动选择地址：开发者工具默认请求 `127.0.0.1:8000`，真机调试默认请求当前机器的局域网地址，手机预览则必须改成 HTTPS 公网域名；如果电脑 IP 变化，可执行 `scripts/sync-wechat-api-base.sh` 重新同步真机调试地址。
-
-如果要让手机实际连到你的本机后端，启动 FastAPI 时也要监听局域网地址，而不是默认只监听本机回环地址：
-
-```bash
-scripts/run-wechat-api.sh
-```
-
-worker 也建议改用：
-
-```bash
-scripts/run-wechat-worker.sh
-```
-
-如果是真机或正式发布，请把小程序请求域名改成微信后台已配置的 `HTTPS` 合法域名，并同步设置后端 `PUBLIC_BASE_URL`，避免图片 `publicUrl` 仍指向本地地址。
-
-## 当前实现状态
-
-- 已完成：项目首页、采集页、任务历史页、看板页、垃圾身份证后台页。
-- 已完成：微信小程序端首页、采集页、任务历史页、治理看板、移动复核页。
-- 已完成：本地图片上传校验、异步 AI 流水线、独立 worker 消费、任务轮询、任务取消/重试、任务分页与保留策略、重复提交去重与结果缓存复用。
-- 已完成：NAFNet 增强接入结构、`CVHub520/damo_yolo_t` 检测接入结构、OCR 检测与识别接入结构、志愿者反馈语义分析接入结构、数据库持久化、Supabase Storage 可选同步。
-- 已完成：真实看板聚合、后台筛选、垃圾身份证状态回写。
-- 待接入：更贴近水下垃圾类别的检测模型、独立任务队列、历史图片批量回迁到对象存储、报告导出。
-
-## 魔搭社区接入点
-
-当前增强模型接入点：
-
-- `services/api/app/services/enhancement.py`
-
-当前检测模型接入点：
-
-- `services/api/app/services/detection.py`
-
-当前 OCR 模型接入点：
-
-- `services/api/app/services/ocr.py`
-
-当前语义分析接入点：
-
-- `services/api/app/services/semantic.py`
-
-统一 AI 编排入口：
-
-- `services/api/app/services/pipeline.py`
-
-垃圾身份证查询入口：
-
-- `GET /api/v1/trash-identities`
-
-异步任务入口：
+### AI Pipeline
 
 - `POST /api/v1/ai/pipeline`
 - `GET /api/v1/ai/pipeline/{job_id}`
@@ -147,23 +144,145 @@ scripts/run-wechat-worker.sh
 - `POST /api/v1/ai/pipeline/{job_id}/cancel`
 - `GET /api/v1/ai/pipeline-jobs`
 
-当前服务已经预留了：
+### Data and Dashboard
 
-- NAFNet 图像去噪增强入口
-- `CVHub520/damo_yolo_t` ONNX 垃圾检测入口
-- `damo/cv_resnet18_ocr-detection-db-line-level_damo` OCR 检测入口
-- `iic/cv_convnextTiny_ocr-recognition-general_damo` OCR 识别入口
-- `Qwen/Qwen3.5-397B-A17B` 志愿者反馈语义分析入口
-- OCR 与来源推断的统一聚合返回结构
+- `GET /api/v1/dashboard/overview`
+- `GET /api/v1/trash-identities`
+- `PATCH /api/v1/trash-identities/{identity_id}`
 
-## Supabase 迁移
+## Quick Start
 
-如果你准备把数据库迁移到 Supabase，参考：
+### 1. Install frontend dependencies
 
-- `docs/supabase-migration.md`
+```bash
+npm install
+```
 
-当前仓库已经包含：
+### 2. Install backend dependencies
 
-- `Alembic` 迁移骨架
-- 初始表结构 migration
-- `SQLite -> 目标数据库` 导入脚本
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r services/api/requirements.txt
+```
+
+如果你希望启用本地图像增强、检测和 OCR，再安装视觉依赖：
+
+```bash
+.venv/bin/pip install -r services/api/requirements-vision.txt
+```
+
+### 3. Configure environment variables
+
+```bash
+cp .env.local.example .env.local
+cp services/api/.env.example services/api/.env
+```
+
+默认前端 API 地址：
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
+```
+
+默认数据库位置：
+
+```bash
+storage/ocean.db
+```
+
+### 4. Start the API server
+
+```bash
+.venv/bin/uvicorn services.api.app.main:app --reload --app-dir .
+```
+
+### 5. Start the pipeline worker
+
+```bash
+.venv/bin/python services/api/scripts/run_pipeline_worker.py
+```
+
+### 6. Start the web app
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### 7. Open the WeChat Mini Program
+
+用微信开发者工具导入 `wechat-miniprogram` 目录即可。
+
+如果需要让手机实际访问本机后端，建议使用仓库中的辅助脚本：
+
+```bash
+scripts/run-wechat-api.sh
+scripts/run-wechat-worker.sh
+```
+
+## Model Usage
+
+### Enhancement
+
+- Model: `iic/cv_nafnet_image-denoise_sidd`
+- Role: 提升水下图像清晰度，改善后续检测和 OCR 输入质量
+- Fallback: OpenCV underwater enhancement -> direct file copy
+
+### Detection
+
+- Model: `CVHub520/damo_yolo_t`
+- Role: 输出垃圾位置、类别和置信度
+- Runtime: ONNX Runtime with `auto / cpu / cuda / coreml`
+- Fallback: rules and mock detections
+
+### OCR
+
+- Detection model: `damo/cv_resnet18_ocr-detection-db-line-level_damo`
+- Recognition model: `iic/cv_convnextTiny_ocr-recognition-general_damo`
+- Role: 提取品牌、材质和来源相关文字线索
+- Fallback: crop-based OCR fallback -> mock OCR texts
+
+### Semantic Analysis
+
+- Model: `Qwen/Qwen3.5-397B-A17B`
+- Role: 生成标签、摘要、风险等级和行动建议
+- Fallback: rule-based semantic result
+
+## Data Persistence
+
+Ocean 默认会持久化两类核心数据：
+
+- **Pipeline jobs**  
+  用于记录任务状态、阶段、进度、错误原因、重试次数和复用次数
+
+- **Trash identities**  
+  用于记录原图、增强图、类别、OCR 文本、风险等级、建议和审核状态
+
+这也是项目区别于普通视觉 demo 的关键：结果不是只返回一次，而是会继续参与复核、看板和治理复盘。
+
+## Notes
+
+- 上传接口仅支持 `JPG / PNG / WebP`
+- 单张图片大小限制为 `10 MB`
+- 语义分析默认超时为 `12s`，超时后快速回退规则分析
+- 项目已支持 worker 心跳与在线状态检查，便于判断任务排队还是 worker 未启动
+- X-AnyLabeling 平台本身具备更多能力，但当前 Ocean 仓库真正落地的是“单张图片识别 + 可配置执行后端”
+
+## Roadmap
+
+- 更贴近水下垃圾场景的专用检测模型
+- 更稳定的外部任务队列
+- 历史图片批量回迁到对象存储
+- 报告导出与阶段汇报能力
+- 更完整的移动端与多端协同
+
+## Related Docs
+
+- [docs/project-plan.md](docs/project-plan.md)
+- [docs/ppt-generation-brief.md](docs/ppt-generation-brief.md)
+- [docs/supabase-migration.md](docs/supabase-migration.md)
+
+## License
+
+当前仓库未单独声明开源许可证。如需公开发布到 GitHub，建议在发布前补充明确的 LICENSE 文件。
